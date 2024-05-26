@@ -11,7 +11,7 @@ on:
       - master
 
 env:
-  IMAGE: socialmediaplatform/socialmediaplatform-container
+  IMAGE: socialmediaplatform-image
   TAG: latest
   DOCKERFILE: ./docker/SocialMediaPlatform.Dockerfile
   CONTEXT: "."
