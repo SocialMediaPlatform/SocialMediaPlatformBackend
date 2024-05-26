@@ -1,4 +1,3 @@
-
 package com.social_media_platform.social_media_platform_backend.service_test;
 
 import com.social_media_platform.social_media_platform_backend.services.DummyService;
@@ -11,12 +10,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 public class DummyServiceTest {
 
-    @Autowired
-    private DummyService dummyService;
+  @Autowired private DummyService dummyService;
 
-    @Test
-    public void testGreet() {
-        String result = dummyService.greet();
-        assertThat(result).isEqualTo("Hello, World!");
-    }
+  @Test
+  public void testGreet() {
+    String result = dummyService.greet();
+    assertThat(result).isEqualTo("Hello, World!");
+  }
 }
