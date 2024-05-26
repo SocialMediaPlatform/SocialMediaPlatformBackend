@@ -1,13 +1,9 @@
 #!/bin/sh
 
-# Get the current user name
 USER=$(whoami)
 
-# Get the current directory name
 REPO_NAME=$(basename "$PWD")
 
-# Create the image name
 IMAGE="${USER}/${REPO_NAME}-test"
 
-# Build the Docker image
 docker build -t "$IMAGE" -f ./docker/test.Dockerfile .
