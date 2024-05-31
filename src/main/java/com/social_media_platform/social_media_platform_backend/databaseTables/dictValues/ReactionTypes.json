@@ -1,17 +1,22 @@
 [
     {
-        "name": "like"
+        "reactionId": 1,
+        "reactionName": "like"
     },
     {
-        "name": "super"
+        "reactionId": 2,
+        "reactionName": "super"
     },
     {
-        "name": "sad"
+        "reactionId": 3,
+        "reactionName": "sad"
     },
     {
-        "name": "dislike"
+        "reactionId": 4,
+        "reactionName": "dislike"
     },
     {
-        "name": "super"
+        "reactionId": 5,
+        "reactionName": "super"
     }
 ]

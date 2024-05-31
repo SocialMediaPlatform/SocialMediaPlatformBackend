@@ -1,11 +1,14 @@
 [
     {
-        "name": "friend"
+        "relationId": 1,
+        "realtionName": "friend"
     },
     {
-        "name": "follower"
+        "relationId": 2,
+        "realtionName": "follower"
     },
     {
-        "name": "blocked"
+        "relationId": 3,
+        "realtionName": "blocked"
     }
 ]
