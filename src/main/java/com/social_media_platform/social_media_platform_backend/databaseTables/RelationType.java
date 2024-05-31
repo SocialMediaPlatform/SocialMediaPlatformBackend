@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @Entity
 public class RelationType {
-    private @Id Integer realtionId;
-    private String relationName;
+    private @Id Integer realtionTypeId;
+    private String relationTypeName;
 }
