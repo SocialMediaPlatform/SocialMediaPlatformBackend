@@ -1,0 +1,14 @@
+[
+    {
+        "relationTypeId": 1,
+        "realtionTypeName": "friend"
+    },
+    {
+        "relationTypeId": 2,
+        "realtionTypeName": "follower"
+    },
+    {
+        "relationTypeId": 3,
+        "realtionTypeName": "blocked"
+    }
+]

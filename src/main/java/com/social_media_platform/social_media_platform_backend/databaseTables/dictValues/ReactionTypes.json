@@ -1,0 +1,22 @@
+[
+    {
+        "reactionTypeId": 1,
+        "reactionTypeName": "like"
+    },
+    {
+        "reactionTypeId": 2,
+        "reactionTypeName": "super"
+    },
+    {
+        "reactionTypeId": 3,
+        "reactionTypeName": "sad"
+    },
+    {
+        "reactionTypeId": 4,
+        "reactionTypeName": "dislike"
+    },
+    {
+        "reactionTypeId": 5,
+        "reactionTypeName": "super"
+    }
+]
