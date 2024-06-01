@@ -10,10 +10,10 @@ import java.util.Set;
 @DiscriminatorValue("MAIN")
 public class MainComment extends Comment {
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "postId", nullable = false)
-    private Post post;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "postId", nullable = false)
+  private Post post;
 
-    @OneToMany(mappedBy = "mainComment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<SubComment> subComments;
+  @OneToMany(mappedBy = "mainComment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private Set<SubComment> subComments;
 }

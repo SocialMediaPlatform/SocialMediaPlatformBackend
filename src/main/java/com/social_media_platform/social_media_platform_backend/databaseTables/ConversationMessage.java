@@ -6,16 +6,17 @@ import lombok.Data;
 @Data
 @Entity
 public class ConversationMessage {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long messageId;
-    private String messageContent;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long messageId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "conversationId", nullable = false)
-    private Conversation conversation;
+  private String messageContent;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId", nullable = false)
-    private User user;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "conversationId", nullable = false)
+  private Conversation conversation;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "userId", nullable = false)
+  private User user;
 }

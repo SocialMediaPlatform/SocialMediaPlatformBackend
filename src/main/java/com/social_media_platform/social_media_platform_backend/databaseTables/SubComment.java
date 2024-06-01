@@ -8,7 +8,7 @@ import lombok.Data;
 @DiscriminatorValue("SUB")
 public class SubComment extends Comment {
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mainCommentId", nullable = false)
-    private MainComment mainComment;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "mainCommentId", nullable = false)
+  private MainComment mainComment;
 }

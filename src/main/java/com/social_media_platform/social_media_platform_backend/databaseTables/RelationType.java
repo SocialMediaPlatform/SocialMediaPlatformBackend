@@ -8,9 +8,9 @@ import java.util.Set;
 @Data
 @Entity
 public class RelationType {
-    private @Id Integer relationTypeId;
-    private String relationTypeName;
+  private @Id Integer relationTypeId;
+  private String relationTypeName;
 
-    @OneToMany(mappedBy = "relationType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<UserRelation> userRelations;
+  @OneToMany(mappedBy = "relationType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private Set<UserRelation> userRelations;
 }

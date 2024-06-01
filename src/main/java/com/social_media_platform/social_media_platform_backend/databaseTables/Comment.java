@@ -10,17 +10,18 @@ import java.util.Date;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "comment_type")
 public abstract class Comment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long commentId;
-    private String commentContents;
-    private Date commentDate;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long commentId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reactionId")
-    private Reaction reaction;
+  private String commentContents;
+  private Date commentDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
-    private User user;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "reactionId")
+  private Reaction reaction;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "userId")
+  private User user;
 }

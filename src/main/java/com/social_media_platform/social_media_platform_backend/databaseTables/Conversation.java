@@ -8,14 +8,15 @@ import java.util.Set;
 @Data
 @Entity
 public class Conversation {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long conversationId;
-    private String conversationName;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long conversationId;
 
-    @OneToMany(mappedBy = "conversation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<ConversationMessage> conversationMessages;
+  private String conversationName;
 
-    @ManyToMany(mappedBy = "conversations", fetch = FetchType.LAZY)
-    private Set<User> users;
+  @OneToMany(mappedBy = "conversation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private Set<ConversationMessage> conversationMessages;
+
+  @ManyToMany(mappedBy = "conversations", fetch = FetchType.LAZY)
+  private Set<User> users;
 }
