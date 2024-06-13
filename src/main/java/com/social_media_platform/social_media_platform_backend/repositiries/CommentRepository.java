@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 import com.social_media_platform.social_media_platform_backend.databaseTables.Comment;
 
 @Repository
-public interface CommentRepository extends JpaRepository<Comment, Long> {
-}
+public interface CommentRepository extends JpaRepository<Comment, Long> {}

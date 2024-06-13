@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 import com.social_media_platform.social_media_platform_backend.databaseTables.Conversation;
 
 @Repository
-public interface ConversationRepository extends JpaRepository<Conversation, Long> {
-}
+public interface ConversationRepository extends JpaRepository<Conversation, Long> {}
