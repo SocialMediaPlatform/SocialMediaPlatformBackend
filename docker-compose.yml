@@ -14,5 +14,26 @@ services:
       - "${POSTGRESDB_LOCAL_PORT}:${POSTGRESDB_DOCKER_PORT}"
     volumes:
       - db:/var/lib/postgresql/db
+  app:
+    depends_on:
+      - postgresdb
+    build:
+      context: .
+      dockerfile: docker/SocialMediaPlatform.Dockerfile
+    restart: on-failure
+    env_file: .env
+    ports:
+      - "${SPRING_LOCAL_PORT}:${SPRING_DOCKER_PORT}"
+    environment:
+      SPRING_APPLICATION_JSON: '{
+          "spring.datasource.url"  : "jdbc:postgresql://postgresdb:${POSTGRESDB_DOCKER_PORT}/${POSTGRESDB_DATABASE}",
+          "spring.datasource.username" : "$POSTGRESDB_USER",
+          "spring.datasource.password" : "$POSTGRESDB_ROOT_PASSWORD",
+          "spring.jpa.hibernate.ddl-auto" : "update"
+        }'
+    volumes:
+      - .m2:/root/.m2
+    stdin_open: true
+    tty: true
 volumes:
   db:
