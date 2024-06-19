@@ -1,4 +1,4 @@
-package com.social_media_platform.social_media_platform_backend.controllers.requests;
+package com.social_media_platform.social_media_platform_backend.controllers;
 
 import java.util.List;
 
