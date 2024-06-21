@@ -9,6 +9,6 @@ import lombok.Data;
 public class SubComment extends Comment {
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "mainCommentId", nullable = false)
+  @JoinColumn(name = "mainCommentId")
   private MainComment mainComment;
 }
