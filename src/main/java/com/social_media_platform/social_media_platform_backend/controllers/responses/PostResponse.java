@@ -8,15 +8,15 @@ import lombok.Data;
 
 @Data
 public class PostResponse {
-    public Long postId;
-    private Date postDate;
-    private String postContent;
-    private UserResponse user;
+  public Long postId;
+  private Date postDate;
+  private String postContent;
+  private UserResponse user;
 
-    public PostResponse(Post post) {
-        this.postId = post.getPostId();
-        this.postDate = post.getPostDate();
-        this.postContent = post.getPostContent();
-        this.user = new UserResponse(post.getUser());
-    }
+  public PostResponse(Post post) {
+    this.postId = post.getPostId();
+    this.postDate = post.getPostDate();
+    this.postContent = post.getPostContent();
+    this.user = new UserResponse(post.getUser());
+  }
 }

@@ -21,46 +21,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/api/v1/comment")
 public class CommentController {
-    private final CommentService commentService;
+  private final CommentService commentService;
 
-    public CommentController(CommentService commentService) {
-        this.commentService = commentService;
+  public CommentController(CommentService commentService) {
+    this.commentService = commentService;
+  }
+
+  @GetMapping("{postId}")
+  public ResponseEntity<List<CommentResponse>> getCommentsInPost(@PathVariable Long postId) {
+    try {
+      var comments = new ArrayList<CommentResponse>();
+      for (var comment : commentService.getCommentsInPost(postId)) {
+        comments.add(new CommentResponse(comment));
+      }
+      return new ResponseEntity<>(comments, HttpStatus.OK);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
 
-    @GetMapping("{postId}")
-    public ResponseEntity<List<CommentResponse>> getCommentsInPost(@PathVariable Long postId) {
-        try {
-            var comments = new ArrayList<CommentResponse>();
-            for (var comment : commentService.getCommentsInPost(postId)) {
-                comments.add(new CommentResponse(comment));
-            }
-            return new ResponseEntity<>(comments, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+  @PostMapping("add")
+  public ResponseEntity<?> addComment(@RequestBody AddMainCommentRequest addMainCommentRequest) {
+    try {
+      commentService.addComment(addMainCommentRequest);
+      return new ResponseEntity<>(HttpStatus.CREATED);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
 
-    @PostMapping("add")
-    public ResponseEntity<?> addComment(@RequestBody AddMainCommentRequest addMainCommentRequest) {
-        try {
-            commentService.addComment(addMainCommentRequest);
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+  @PostMapping("addResponse")
+  public ResponseEntity<?> addComment(@RequestBody AddSubCommentRequest addMainCommentRequest) {
+    try {
+      commentService.addComment(addMainCommentRequest);
+      return new ResponseEntity<>(HttpStatus.CREATED);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-    @PostMapping("addResponse")
-    public ResponseEntity<?> addComment(@RequestBody AddSubCommentRequest addMainCommentRequest) {
-        try {
-            commentService.addComment(addMainCommentRequest);
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
+  }
 }

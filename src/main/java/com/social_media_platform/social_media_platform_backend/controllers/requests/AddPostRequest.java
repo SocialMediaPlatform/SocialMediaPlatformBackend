@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class AddPostRequest {
-    private Date postDate;
-    private String postContent;
-    private Long userId;
+  private Date postDate;
+  private String postContent;
+  private Long userId;
 }

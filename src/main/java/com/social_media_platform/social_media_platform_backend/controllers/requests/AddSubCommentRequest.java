@@ -6,8 +6,8 @@ import lombok.Data;
 
 @Data
 public class AddSubCommentRequest {
-    private Long userId;
-    private String commentContents;
-    private Date commentDate;
-    private Long mainCommentId;
+  private Long userId;
+  private String commentContents;
+  private Date commentDate;
+  private Long mainCommentId;
 }

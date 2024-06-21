@@ -11,33 +11,32 @@ import lombok.Data;
 
 @Data
 public class CommentResponse {
-    private Long commentId;
-    private String commentContents;
-    private Date commentDate;
-    private Long mainCommentId;
+  private Long commentId;
+  private String commentContents;
+  private Date commentDate;
+  private Long mainCommentId;
 
-    private Set<CommentResponse> replies;
+  private Set<CommentResponse> replies;
 
-    public CommentResponse() {
+  public CommentResponse() {}
+
+  public CommentResponse(Comment comment) {
+    this.setCommentId(comment.getCommentId());
+    this.setCommentContents(comment.getCommentContents());
+    this.setCommentDate(comment.getCommentDate());
+    if (comment instanceof MainComment) {
+      for (var reply : ((MainComment) comment).getSubComments()) {
+        this.replies.add(new CommentResponse(reply));
+      }
+    } else {
+      this.setMainCommentId(((SubComment) comment).getMainComment().getCommentId());
     }
+  }
 
-    public CommentResponse(Comment comment) {
-        this.setCommentId(comment.getCommentId());
-        this.setCommentContents(comment.getCommentContents());
-        this.setCommentDate(comment.getCommentDate());
-        if (comment instanceof MainComment) {
-            for (var reply : ((MainComment) comment).getSubComments()) {
-                this.replies.add(new CommentResponse(reply));
-            }
-        } else {
-            this.setMainCommentId(((SubComment) comment).getMainComment().getCommentId());
-        }
-    }
-
-    private CommentResponse(SubComment comment) {
-        this.setCommentId(comment.getCommentId());
-        this.setCommentContents(comment.getCommentContents());
-        this.setCommentDate(comment.getCommentDate());
-        this.setMainCommentId(comment.getMainComment().getCommentId());
-    }
+  private CommentResponse(SubComment comment) {
+    this.setCommentId(comment.getCommentId());
+    this.setCommentContents(comment.getCommentContents());
+    this.setCommentDate(comment.getCommentDate());
+    this.setMainCommentId(comment.getMainComment().getCommentId());
+  }
 }

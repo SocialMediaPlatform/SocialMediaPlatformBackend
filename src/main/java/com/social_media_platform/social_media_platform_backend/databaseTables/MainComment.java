@@ -15,5 +15,4 @@ public class MainComment extends Comment {
 
   @OneToMany(mappedBy = "mainComment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private Set<SubComment> subComments;
-
 }

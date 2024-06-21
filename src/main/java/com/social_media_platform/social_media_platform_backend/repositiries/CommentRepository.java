@@ -11,9 +11,9 @@ import com.social_media_platform.social_media_platform_backend.databaseTables.Co
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    @Query("SELECT c FROM Comment c WHERE c.post.postId = :postId")
-    public List<Comment> findByPostId(Long postId);
+  @Query("SELECT c FROM Comment c WHERE c.post.postId = :postId")
+  public List<Comment> findByPostId(Long postId);
 
-    @Query("SELECT c FROM Comment c WHERE c.mainComment.commentId = :mainCommentId")
-    public Set<Comment> findByMainCommentId(Long mainCommentId);
+  @Query("SELECT c FROM Comment c WHERE c.mainComment.commentId = :mainCommentId")
+  public Set<Comment> findByMainCommentId(Long mainCommentId);
 }

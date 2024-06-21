@@ -31,6 +31,5 @@ public class Post {
     this.postContent = postContent;
   }
 
-  public Post() {
-  }
+  public Post() {}
 }
