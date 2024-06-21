@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import com.social_media_platform.social_media_platform_backend.controllers.requests.AddMainCommentRequest;
 import com.social_media_platform.social_media_platform_backend.controllers.requests.AddSubCommentRequest;
 import com.social_media_platform.social_media_platform_backend.controllers.responses.CommentResponse;
-import com.social_media_platform.social_media_platform_backend.databaseTables.MainComment;
 import com.social_media_platform.social_media_platform_backend.services.CommentService;
 
 import org.springframework.web.bind.annotation.GetMapping;
