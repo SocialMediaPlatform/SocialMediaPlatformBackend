@@ -14,30 +14,23 @@ public class CommentResponse {
     private Long commentId;
     private String commentContents;
     private Date commentDate;
+    private Long mainCommentId;
 
     private Set<CommentResponse> replies;
 
+    public CommentResponse() {
+    }
+
     public CommentResponse(Comment comment) {
+        this.setCommentId(comment.getCommentId());
+        this.setCommentContents(comment.getCommentContents());
+        this.setCommentDate(comment.getCommentDate());
         if (comment instanceof MainComment) {
-            new CommentResponse((MainComment) comment);
+            for (var reply : ((MainComment) comment).getSubComments()) {
+                this.replies.add(new CommentResponse(reply));
+            }
         } else {
-            new CommentResponse((SubComment) comment);
+            this.setMainCommentId(((SubComment) comment).getMainComment().getCommentId());
         }
-    }
-
-    private CommentResponse(MainComment mainComment) {
-        this.commentId = mainComment.getCommentId();
-        this.commentContents = mainComment.getCommentContents();
-        this.commentDate = mainComment.getCommentDate();
-
-        for (var reply : mainComment.getSubComments()) {
-            this.replies.add(new CommentResponse(reply));
-        }
-    }
-
-    private CommentResponse(SubComment subComment) {
-        this.commentId = subComment.getCommentId();
-        this.commentContents = subComment.getCommentContents();
-        this.commentDate = subComment.getCommentDate();
     }
 }
