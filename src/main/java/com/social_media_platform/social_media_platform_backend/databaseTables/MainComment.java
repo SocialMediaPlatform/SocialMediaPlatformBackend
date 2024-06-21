@@ -10,7 +10,7 @@ import java.util.Set;
 public class MainComment extends Comment {
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "postId", nullable = false)
+  @JoinColumn(name = "postId")
   private Post post;
 
   @OneToMany(mappedBy = "mainComment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

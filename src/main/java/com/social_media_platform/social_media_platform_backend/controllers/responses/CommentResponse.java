@@ -33,4 +33,11 @@ public class CommentResponse {
             this.setMainCommentId(((SubComment) comment).getMainComment().getCommentId());
         }
     }
+
+    private CommentResponse(SubComment comment) {
+        this.setCommentId(comment.getCommentId());
+        this.setCommentContents(comment.getCommentContents());
+        this.setCommentDate(comment.getCommentDate());
+        this.setMainCommentId(comment.getMainComment().getCommentId());
+    }
 }

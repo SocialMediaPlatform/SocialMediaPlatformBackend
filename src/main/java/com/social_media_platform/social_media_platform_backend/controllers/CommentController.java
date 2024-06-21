@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import com.social_media_platform.social_media_platform_backend.controllers.requests.AddMainCommentRequest;
+import com.social_media_platform.social_media_platform_backend.controllers.requests.AddSubCommentRequest;
 import com.social_media_platform.social_media_platform_backend.controllers.responses.CommentResponse;
+import com.social_media_platform.social_media_platform_backend.databaseTables.MainComment;
 import com.social_media_platform.social_media_platform_backend.services.CommentService;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +44,17 @@ public class CommentController {
 
     @PostMapping("add")
     public ResponseEntity<?> addComment(@RequestBody AddMainCommentRequest addMainCommentRequest) {
+        try {
+            commentService.addComment(addMainCommentRequest);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("addResponse")
+    public ResponseEntity<?> addComment(@RequestBody AddSubCommentRequest addMainCommentRequest) {
         try {
             commentService.addComment(addMainCommentRequest);
             return new ResponseEntity<>(HttpStatus.CREATED);
