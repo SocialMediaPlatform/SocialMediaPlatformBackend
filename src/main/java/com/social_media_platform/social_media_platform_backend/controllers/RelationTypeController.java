@@ -14,14 +14,14 @@ import com.social_media_platform.social_media_platform_backend.services.Relation
 @RestController
 @RequestMapping("/api/v1/relationType")
 public class RelationTypeController {
-    private RelationTypeService relationTypeService;
+  private RelationTypeService relationTypeService;
 
-    public RelationTypeController(RelationTypeService relationTypeService) {
-        this.relationTypeService = relationTypeService;
-    }
+  public RelationTypeController(RelationTypeService relationTypeService) {
+    this.relationTypeService = relationTypeService;
+  }
 
-    @GetMapping
-    public ResponseEntity<List<RelationType>> getAllRealtionTypes() {
-        return new ResponseEntity<>(relationTypeService.getAllRelationTypes(), HttpStatus.OK);
-    }
+  @GetMapping
+  public ResponseEntity<List<RelationType>> getAllRealtionTypes() {
+    return new ResponseEntity<>(relationTypeService.getAllRelationTypes(), HttpStatus.OK);
+  }
 }

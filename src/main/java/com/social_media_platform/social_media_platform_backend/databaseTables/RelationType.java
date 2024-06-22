@@ -19,6 +19,5 @@ public class RelationType {
     this.relationTypeName = relationTypeName;
   }
 
-  public RelationType() {
-  }
+  public RelationType() {}
 }

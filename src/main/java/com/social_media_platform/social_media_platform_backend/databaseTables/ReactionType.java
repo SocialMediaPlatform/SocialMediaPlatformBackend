@@ -19,6 +19,5 @@ public class ReactionType {
     this.reactionTypeName = reactionTypeName;
   }
 
-  public ReactionType() {
-  }
+  public ReactionType() {}
 }

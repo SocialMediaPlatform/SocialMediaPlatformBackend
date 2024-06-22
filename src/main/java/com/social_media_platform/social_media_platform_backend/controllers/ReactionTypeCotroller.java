@@ -14,14 +14,14 @@ import com.social_media_platform.social_media_platform_backend.services.Reaction
 @RestController
 @RequestMapping("/api/v1/reactionType")
 public class ReactionTypeCotroller {
-    private ReactionTypeService reactionTypeService;
+  private ReactionTypeService reactionTypeService;
 
-    public ReactionTypeCotroller(ReactionTypeService reactionTypeService) {
-        this.reactionTypeService = reactionTypeService;
-    }
+  public ReactionTypeCotroller(ReactionTypeService reactionTypeService) {
+    this.reactionTypeService = reactionTypeService;
+  }
 
-    @GetMapping
-    public ResponseEntity<List<ReactionType>> getAllReactionTypes() {
-        return new ResponseEntity<>(reactionTypeService.getAllReactionTypes(), HttpStatus.OK);
-    }
+  @GetMapping
+  public ResponseEntity<List<ReactionType>> getAllReactionTypes() {
+    return new ResponseEntity<>(reactionTypeService.getAllReactionTypes(), HttpStatus.OK);
+  }
 }

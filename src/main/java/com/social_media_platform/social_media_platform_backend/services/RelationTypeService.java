@@ -9,13 +9,13 @@ import com.social_media_platform.social_media_platform_backend.databaseTables.Re
 
 @Service
 public class RelationTypeService {
-    private RelationTypeRepository relationTypeRepository;
+  private RelationTypeRepository relationTypeRepository;
 
-    public RelationTypeService(RelationTypeRepository relationTypeRepository) {
-        this.relationTypeRepository = relationTypeRepository;
-    }
+  public RelationTypeService(RelationTypeRepository relationTypeRepository) {
+    this.relationTypeRepository = relationTypeRepository;
+  }
 
-    public List<RelationType> getAllRelationTypes() {
-        return relationTypeRepository.findAll();
-    }
+  public List<RelationType> getAllRelationTypes() {
+    return relationTypeRepository.findAll();
+  }
 }

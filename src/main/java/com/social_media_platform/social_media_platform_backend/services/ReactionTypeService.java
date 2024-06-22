@@ -9,13 +9,13 @@ import com.social_media_platform.social_media_platform_backend.databaseTables.Re
 
 @Service
 public class ReactionTypeService {
-    private ReactionTypeRepository reactionTypeRepository;
+  private ReactionTypeRepository reactionTypeRepository;
 
-    public ReactionTypeService(ReactionTypeRepository reactionTypeRepository) {
-        this.reactionTypeRepository = reactionTypeRepository;
-    }
+  public ReactionTypeService(ReactionTypeRepository reactionTypeRepository) {
+    this.reactionTypeRepository = reactionTypeRepository;
+  }
 
-    public List<ReactionType> getAllReactionTypes() {
-        return reactionTypeRepository.findAll();
-    }
+  public List<ReactionType> getAllReactionTypes() {
+    return reactionTypeRepository.findAll();
+  }
 }
