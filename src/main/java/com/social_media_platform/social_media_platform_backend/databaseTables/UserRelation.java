@@ -17,4 +17,17 @@ public class UserRelation {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "relationTypeId", nullable = false)
   private RelationType relationType;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "targetUserId", nullable = false)
+  private User target_user;
+
+  public UserRelation() {
+  }
+
+  public UserRelation(User user, RelationType relationType, User target_user) {
+    this.user = user;
+    this.relationType = relationType;
+    this.target_user = target_user;
+  }
 }
