@@ -3,8 +3,6 @@ package com.social_media_platform.social_media_platform_backend.databaseTables;
 import lombok.Data;
 import jakarta.persistence.*;
 
-import java.util.Set;
-
 @Data
 @Entity
 public class Reaction {
@@ -20,7 +18,7 @@ public class Reaction {
   @JoinColumn(name = "reactionTypeId", nullable = false)
   private ReactionType reactionType;
 
-  @OneToMany(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "commentId")
-  private Set<Comment> comment;
+  private Comment comment;
 }

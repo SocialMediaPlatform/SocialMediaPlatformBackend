@@ -4,11 +4,12 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "comment_type")
+@DiscriminatorColumn(name = "comment")
 public abstract class Comment {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,9 +18,9 @@ public abstract class Comment {
   private String commentContents;
   private Date commentDate;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @OneToMany(fetch = FetchType.LAZY)
   @JoinColumn(name = "reactionId")
-  private Reaction reaction;
+  private Set<Reaction> reaction;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "userId")

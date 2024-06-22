@@ -25,4 +25,11 @@ public class Post {
 
   @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private Set<Reaction> reactions;
+
+  public Post(Date postDate, String postContent) {
+    this.postDate = postDate;
+    this.postContent = postContent;
+  }
+
+  public Post() {}
 }
