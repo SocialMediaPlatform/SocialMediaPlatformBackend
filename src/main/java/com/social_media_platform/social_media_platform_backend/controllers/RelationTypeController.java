@@ -12,7 +12,7 @@ import com.social_media_platform.social_media_platform_backend.databaseTables.Re
 import com.social_media_platform.social_media_platform_backend.services.RelationTypeService;
 
 @RestController
-@RequestMapping("/api/v1/reactionType")
+@RequestMapping("/api/v1/relationType")
 public class RelationTypeController {
     private RelationTypeService relationTypeService;
 

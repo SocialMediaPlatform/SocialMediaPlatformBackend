@@ -8,9 +8,17 @@ import java.util.Set;
 @Data
 @Entity
 public class RelationType {
-  private @Id Integer relationTypeId;
+  private @Id Long relationTypeId;
   private String relationTypeName;
 
   @OneToMany(mappedBy = "relationType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private Set<UserRelation> userRelations;
+
+  public RelationType(Long relationTypeId, String relationTypeName) {
+    this.relationTypeId = relationTypeId;
+    this.relationTypeName = relationTypeName;
+  }
+
+  public RelationType() {
+  }
 }
