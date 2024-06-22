@@ -1,5 +1,6 @@
 package com.social_media_platform.social_media_platform_backend.services;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,24 +36,24 @@ public class CommentService {
     return commentRepository.findByPostId(postId);
   }
 
-  public Set<SubComment> getSubComments(Long commentId) throws Exception {
+  public List<SubComment> getSubComments(Long commentId) throws Exception {
     commentRepository.findById(commentId).orElseThrow(() -> new Exception("Comment not found"));
-    Set<SubComment> subComments = new HashSet<SubComment>();
-    for (var comment : commentRepository.findByMainCommentId(commentId)) {
-      subComments.add((SubComment) comment);
+    List<SubComment> subComments = new ArrayList<SubComment>();
+    for (var comment : commentRepository.findAll()) {
+      if (comment instanceof SubComment && ((SubComment) comment).getMainComment().getCommentId() == commentId) {
+        subComments.add((SubComment) comment);
+      }
     }
     return subComments;
   }
 
   public void addComment(AddMainCommentRequest addMainCommentRequest) throws Exception {
-    var post =
-        postRepository
-            .findById(addMainCommentRequest.getPostId())
-            .orElseThrow(() -> new Exception("Post not found"));
-    var user =
-        userRepository
-            .findById(addMainCommentRequest.getUserId())
-            .orElseThrow(() -> new Exception("User not found"));
+    var post = postRepository
+        .findById(addMainCommentRequest.getPostId())
+        .orElseThrow(() -> new Exception("Post not found"));
+    var user = userRepository
+        .findById(addMainCommentRequest.getUserId())
+        .orElseThrow(() -> new Exception("User not found"));
 
     var mainComment = new MainComment();
     mainComment.setCommentContents(addMainCommentRequest.getCommentContents());
@@ -64,17 +65,15 @@ public class CommentService {
   }
 
   public void addComment(AddSubCommentRequest addMainCommentRequest) throws Exception {
-    var mainComment =
-        commentRepository
-            .findById(addMainCommentRequest.getMainCommentId())
-            .orElseThrow(() -> new Exception("Main comment not found"));
+    var mainComment = commentRepository
+        .findById(addMainCommentRequest.getMainCommentId())
+        .orElseThrow(() -> new Exception("Main comment not found"));
     if (!(mainComment instanceof MainComment)) {
       throw new Exception("Main comment not found");
     }
-    var user =
-        userRepository
-            .findById(addMainCommentRequest.getUserId())
-            .orElseThrow(() -> new Exception("User not found"));
+    var user = userRepository
+        .findById(addMainCommentRequest.getUserId())
+        .orElseThrow(() -> new Exception("User not found"));
 
     var subComment = new SubComment();
     subComment.setCommentContents(addMainCommentRequest.getCommentContents());

@@ -32,7 +32,12 @@ public class CommentController {
     try {
       var comments = new ArrayList<CommentResponse>();
       for (var comment : commentService.getCommentsInPost(postId)) {
-        comments.add(new CommentResponse(comment));
+        var newComment = new CommentResponse(comment);
+        newComment.setReplies(new ArrayList<CommentResponse>());
+        for (var reply : commentService.getSubComments(comment.getCommentId())) {
+          newComment.getReplies().add(new CommentResponse(reply));
+        }
+        comments.add(newComment);
       }
       return new ResponseEntity<>(comments, HttpStatus.OK);
     } catch (Exception e) {
