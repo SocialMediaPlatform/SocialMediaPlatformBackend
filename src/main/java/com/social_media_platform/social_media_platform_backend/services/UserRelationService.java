@@ -1,5 +1,7 @@
 package com.social_media_platform.social_media_platform_backend.services;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.social_media_platform.social_media_platform_backend.databaseTables.UserRelation;
@@ -28,5 +30,10 @@ public class UserRelationService {
                 .orElseThrow(() -> new Exception("Relation type not found"));
 
         relationRepository.save(new UserRelation(user, relationType, targetUser));
+    }
+
+    public List<UserRelation> getfollowedUsers(Long userId) throws Exception {
+        var user = userRepository.findById(userId).orElseThrow(() -> new Exception("User not found"));
+        return relationRepository.findFollowedUsers(userId);
     }
 }
