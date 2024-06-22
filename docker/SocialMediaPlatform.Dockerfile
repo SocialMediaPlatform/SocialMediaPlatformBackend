@@ -28,6 +28,7 @@ ENV HOME=/home/$USER
 WORKDIR $HOME
 
 COPY --from=build-stage --chown=$UID:$GID /app/target/social_media_platform_backend-0.0.1-SNAPSHOT.jar $HOME/app.jar
+COPY src/main/java/com/social_media_platform/social_media_platform_backend/databaseTables/dictValues src/main/java/com/social_media_platform/social_media_platform_backend/databaseTables/dictValues
 
 USER $UID:$GID
 
