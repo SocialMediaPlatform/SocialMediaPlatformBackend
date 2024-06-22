@@ -6,3 +6,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+jwt:
+  secretKey: 7c3252b60733f4b3e860b7b6f2965a742d5f68cfaa0fa91c3bbc031b9487216b
+  expirationTime: 100000
