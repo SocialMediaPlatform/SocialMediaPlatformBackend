@@ -2,7 +2,7 @@ package com.social_media_platform.social_media_platform_backend.service_test;
 
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,6 +32,6 @@ public class ReactionTypeServiceTest {
         List.of(new ReactionType(1L, "like"), new ReactionType(2L, "dislike"));
     when(reactionTypeRepository.findAll()).thenReturn(reactionTypes);
     assertThat(reactionTypeService.getAllReactionTypes().size()).isEqualTo(2);
-    assertThat(reactionTypeService.getAllReactionTypes().get(2).getReactionTypeId()).isEqualTo(2L);
+    assertThat(reactionTypeService.getAllReactionTypes().get(1).getReactionTypeId()).isEqualTo(2L);
   }
 }
