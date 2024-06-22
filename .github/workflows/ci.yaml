@@ -53,6 +53,12 @@ jobs:
   test:
     runs-on: ubuntu-latest
     needs: build
+    env:
+      SPRING_DATASOURCE_URL: ${{ secrets.TEST_CONTAINER_URL}}
+      SPRING_DATASOURCE_USERNAME: ${{ secrets.TEST_CONTAINER_USERNAME }}
+      SPRING_DATASOURCE_PASSWORD: ${{ secrets.TEST_CONTAINER_PASSWORD }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      EXPIRATION_TIME: ${{secrets.EXPIRATION_TIME }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
