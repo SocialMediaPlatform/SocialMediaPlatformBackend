@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 import com.social_media_platform.social_media_platform_backend.databaseTables.RelationType;
 
 @Repository
-public interface RelationTypeRepository extends JpaRepository<RelationType, Integer> {}
+public interface RelationTypeRepository extends JpaRepository<RelationType, Long> {
+}
