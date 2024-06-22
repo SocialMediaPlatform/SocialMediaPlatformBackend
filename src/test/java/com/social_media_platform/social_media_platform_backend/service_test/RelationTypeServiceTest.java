@@ -2,7 +2,7 @@ package com.social_media_platform.social_media_platform_backend.service_test;
 
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,6 +32,6 @@ public class RelationTypeServiceTest {
         List.of(new RelationType(1L, "blocked"), new RelationType(2L, "follower"));
     when(relationTypeRepository.findAll()).thenReturn(reactionTypes);
     assertThat(relationTypeService.getAllRelationTypes().size()).isEqualTo(2);
-    assertThat(relationTypeService.getAllRelationTypes().get(2).getRelationTypeId()).isEqualTo(2L);
+    assertThat(relationTypeService.getAllRelationTypes().get(0).getRelationTypeId()).isEqualTo(1L);
   }
 }
