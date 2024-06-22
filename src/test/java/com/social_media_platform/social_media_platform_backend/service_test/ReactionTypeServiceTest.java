@@ -17,22 +17,21 @@ import com.social_media_platform.social_media_platform_backend.services.Reaction
 
 @SpringBootTest
 public class ReactionTypeServiceTest {
-    @Autowired
-    ReactionTypeService reactionTypeService;
+  @Autowired ReactionTypeService reactionTypeService;
 
-    @MockBean
-    ReactionTypeRepository reactionTypeRepository;
+  @MockBean ReactionTypeRepository reactionTypeRepository;
 
-    @BeforeEach
-    void init() {
-        reactionTypeRepository.deleteAll();
-    }
+  @BeforeEach
+  void init() {
+    reactionTypeRepository.deleteAll();
+  }
 
-    @Test
-    public void testGetAllReactionTypes() {
-        List<ReactionType> reactionTypes = List.of(new ReactionType(1L, "like"), new ReactionType(2L, "dislike"));
-        when(reactionTypeRepository.findAll()).thenReturn(reactionTypes);
-        assertThat(reactionTypeService.getAllReactionTypes().size()).isEqualTo(2);
-        assertThat(reactionTypeService.getAllReactionTypes().get(2).getReactionTypeId()).isEqualTo(2L);
-    }
+  @Test
+  public void testGetAllReactionTypes() {
+    List<ReactionType> reactionTypes =
+        List.of(new ReactionType(1L, "like"), new ReactionType(2L, "dislike"));
+    when(reactionTypeRepository.findAll()).thenReturn(reactionTypes);
+    assertThat(reactionTypeService.getAllReactionTypes().size()).isEqualTo(2);
+    assertThat(reactionTypeService.getAllReactionTypes().get(2).getReactionTypeId()).isEqualTo(2L);
+  }
 }

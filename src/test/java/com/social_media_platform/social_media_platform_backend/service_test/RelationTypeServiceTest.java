@@ -17,22 +17,21 @@ import com.social_media_platform.social_media_platform_backend.services.Relation
 
 @SpringBootTest
 public class RelationTypeServiceTest {
-    @Autowired
-    RelationTypeService relationTypeService;
+  @Autowired RelationTypeService relationTypeService;
 
-    @MockBean
-    RelationTypeRepository relationTypeRepository;
+  @MockBean RelationTypeRepository relationTypeRepository;
 
-    @BeforeEach
-    void init() {
-        relationTypeRepository.deleteAll();
-    }
+  @BeforeEach
+  void init() {
+    relationTypeRepository.deleteAll();
+  }
 
-    @Test
-    public void testGetAllRelationsTypes() {
-        List<RelationType> reactionTypes = List.of(new RelationType(1L, "blocked"), new RelationType(2L, "follower"));
-        when(relationTypeRepository.findAll()).thenReturn(reactionTypes);
-        assertThat(relationTypeService.getAllRelationTypes().size()).isEqualTo(2);
-        assertThat(relationTypeService.getAllRelationTypes().get(2).getRelationTypeId()).isEqualTo(2L);
-    }
+  @Test
+  public void testGetAllRelationsTypes() {
+    List<RelationType> reactionTypes =
+        List.of(new RelationType(1L, "blocked"), new RelationType(2L, "follower"));
+    when(relationTypeRepository.findAll()).thenReturn(reactionTypes);
+    assertThat(relationTypeService.getAllRelationTypes().size()).isEqualTo(2);
+    assertThat(relationTypeService.getAllRelationTypes().get(2).getRelationTypeId()).isEqualTo(2L);
+  }
 }

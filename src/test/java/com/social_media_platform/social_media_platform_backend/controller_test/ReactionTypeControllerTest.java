@@ -17,17 +17,17 @@ import com.social_media_platform.social_media_platform_backend.services.Reaction
 
 @SpringBootTest
 public class ReactionTypeControllerTest {
-    @Autowired
-    ReactionTypeController ReactionTypeController;
+  @Autowired ReactionTypeController ReactionTypeController;
 
-    @MockBean
-    ReactionTypeService ReactionTypeService;
+  @MockBean ReactionTypeService ReactionTypeService;
 
-    @Test
-    void getAllReactionTypesTest() {
-        List<ReactionType> reactionTypes = List.of(new ReactionType(1L, "blocked"), new ReactionType(2L, "follower"));
-        when(ReactionTypeService.getAllReactionTypes()).thenReturn(reactionTypes);
-        assertThat(ReactionTypeController.getAllReactionTypes().getBody().size()).isEqualTo(2);
-        assertThat(ReactionTypeController.getAllReactionTypes().getStatusCode()).isEqualTo(HttpStatus.OK);
-    }
+  @Test
+  void getAllReactionTypesTest() {
+    List<ReactionType> reactionTypes =
+        List.of(new ReactionType(1L, "blocked"), new ReactionType(2L, "follower"));
+    when(ReactionTypeService.getAllReactionTypes()).thenReturn(reactionTypes);
+    assertThat(ReactionTypeController.getAllReactionTypes().getBody().size()).isEqualTo(2);
+    assertThat(ReactionTypeController.getAllReactionTypes().getStatusCode())
+        .isEqualTo(HttpStatus.OK);
+  }
 }

@@ -17,17 +17,17 @@ import com.social_media_platform.social_media_platform_backend.services.Relation
 
 @SpringBootTest
 public class RelationTypeControllerTest {
-    @Autowired
-    RelationTypeController relationTypeController;
+  @Autowired RelationTypeController relationTypeController;
 
-    @MockBean
-    RelationTypeService relationTypeService;
+  @MockBean RelationTypeService relationTypeService;
 
-    @Test
-    void getAllRelationTypesTest() {
-        List<RelationType> reactionTypes = List.of(new RelationType(1L, "blocked"), new RelationType(2L, "follower"));
-        when(relationTypeService.getAllRelationTypes()).thenReturn(reactionTypes);
-        assertThat(relationTypeController.getAllRealtionTypes().getBody().size()).isEqualTo(2);
-        assertThat(relationTypeController.getAllRealtionTypes().getStatusCode()).isEqualTo(HttpStatus.OK);
-    }
+  @Test
+  void getAllRelationTypesTest() {
+    List<RelationType> reactionTypes =
+        List.of(new RelationType(1L, "blocked"), new RelationType(2L, "follower"));
+    when(relationTypeService.getAllRelationTypes()).thenReturn(reactionTypes);
+    assertThat(relationTypeController.getAllRealtionTypes().getBody().size()).isEqualTo(2);
+    assertThat(relationTypeController.getAllRealtionTypes().getStatusCode())
+        .isEqualTo(HttpStatus.OK);
+  }
 }
