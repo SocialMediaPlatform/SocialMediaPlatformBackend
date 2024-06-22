@@ -13,10 +13,10 @@ import com.social_media_platform.social_media_platform_backend.services.Reaction
 
 @RestController
 @RequestMapping("/api/v1/reactionType")
-public class ReactionTypeCotroller {
+public class ReactionTypeController {
   private ReactionTypeService reactionTypeService;
 
-  public ReactionTypeCotroller(ReactionTypeService reactionTypeService) {
+  public ReactionTypeController(ReactionTypeService reactionTypeService) {
     this.reactionTypeService = reactionTypeService;
   }
 

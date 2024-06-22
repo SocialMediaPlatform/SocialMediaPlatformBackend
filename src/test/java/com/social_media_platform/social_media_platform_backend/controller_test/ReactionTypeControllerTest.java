@@ -11,14 +11,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 
-import com.social_media_platform.social_media_platform_backend.controllers.ReactionTypeCotroller;
+import com.social_media_platform.social_media_platform_backend.controllers.ReactionTypeController;
 import com.social_media_platform.social_media_platform_backend.databaseTables.ReactionType;
 import com.social_media_platform.social_media_platform_backend.services.ReactionTypeService;
 
 @SpringBootTest
 public class ReactionTypeControllerTest {
     @Autowired
-    ReactionTypeCotroller ReactionTypeController;
+    ReactionTypeController ReactionTypeController;
 
     @MockBean
     ReactionTypeService ReactionTypeService;
