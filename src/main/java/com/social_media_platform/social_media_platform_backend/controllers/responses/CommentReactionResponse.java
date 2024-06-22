@@ -6,13 +6,13 @@ import lombok.Data;
 
 @Data
 public class CommentReactionResponse {
-    Long reactionTypeId;
-    Long reactionId;
-    UserResponse user;
+  Long reactionTypeId;
+  Long reactionId;
+  UserResponse user;
 
-    public CommentReactionResponse(Reaction commentReaction) {
-        this.reactionTypeId = commentReaction.getReactionType().getReactionTypeId();
-        this.reactionId = commentReaction.getReactionId();
-        this.user = new UserResponse(commentReaction.getUser());
-    }
+  public CommentReactionResponse(Reaction commentReaction) {
+    this.reactionTypeId = commentReaction.getReactionType().getReactionTypeId();
+    this.reactionId = commentReaction.getReactionId();
+    this.user = new UserResponse(commentReaction.getUser());
+  }
 }

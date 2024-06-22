@@ -37,7 +37,10 @@ public class User implements UserDetails {
   private Set<Reaction> reactions;
 
   @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(name = "user_conversation", joinColumns = @JoinColumn(name = "userId"), inverseJoinColumns = @JoinColumn(name = "conversationId"))
+  @JoinTable(
+      name = "user_conversation",
+      joinColumns = @JoinColumn(name = "userId"),
+      inverseJoinColumns = @JoinColumn(name = "conversationId"))
   private Set<Conversation> conversations;
 
   public User(String username, String email, String password) {

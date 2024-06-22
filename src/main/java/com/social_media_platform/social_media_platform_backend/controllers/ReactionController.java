@@ -14,32 +14,37 @@ import com.social_media_platform.social_media_platform_backend.services.Reaction
 @RestController
 @RequestMapping("/api/v1/reaction")
 public class ReactionController {
-    private final ReactionService reactionService;
+  private final ReactionService reactionService;
 
-    public ReactionController(ReactionService reactionService) {
-        this.reactionService = reactionService;
-    }
+  public ReactionController(ReactionService reactionService) {
+    this.reactionService = reactionService;
+  }
 
-    @PostMapping("addPostReaction")
-    public ResponseEntity<?> addPostReaction(@RequestBody AddPostReaction addPostReaction) {
-        try {
-            reactionService.addPostReaction(addPostReaction.getPostId(), addPostReaction.getReactionTypeId(),
-                    addPostReaction.getUserId());
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+  @PostMapping("addPostReaction")
+  public ResponseEntity<?> addPostReaction(@RequestBody AddPostReaction addPostReaction) {
+    try {
+      reactionService.addPostReaction(
+          addPostReaction.getPostId(),
+          addPostReaction.getReactionTypeId(),
+          addPostReaction.getUserId());
+      return new ResponseEntity<>(HttpStatus.CREATED);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
 
-    @PostMapping("addCommentReaction")
-    public ResponseEntity<?> addCommentReaction(@RequestBody AddCommentReaction addCommentReaction) {
-        try {
-            reactionService.addCommentReaction(addCommentReaction.getCommentId(), addCommentReaction.getReactionTypeId(), addCommentReaction.getUserId());
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+  @PostMapping("addCommentReaction")
+  public ResponseEntity<?> addCommentReaction(@RequestBody AddCommentReaction addCommentReaction) {
+    try {
+      reactionService.addCommentReaction(
+          addCommentReaction.getCommentId(),
+          addCommentReaction.getReactionTypeId(),
+          addCommentReaction.getUserId());
+      return new ResponseEntity<>(HttpStatus.CREATED);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
 }

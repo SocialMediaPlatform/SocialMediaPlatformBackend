@@ -27,7 +27,8 @@ public class CommentService {
   public CommentService(
       CommentRepository commentRepository,
       PostRepository postRepository,
-      UserRepository userRepository, ReactionRepository reactionRepository) {
+      UserRepository userRepository,
+      ReactionRepository reactionRepository) {
     this.commentRepository = commentRepository;
     this.postRepository = postRepository;
     this.userRepository = userRepository;
@@ -49,12 +50,14 @@ public class CommentService {
   }
 
   public void addComment(AddMainCommentRequest addMainCommentRequest) throws Exception {
-    var post = postRepository
-        .findById(addMainCommentRequest.getPostId())
-        .orElseThrow(() -> new Exception("Post not found"));
-    var user = userRepository
-        .findById(addMainCommentRequest.getUserId())
-        .orElseThrow(() -> new Exception("User not found"));
+    var post =
+        postRepository
+            .findById(addMainCommentRequest.getPostId())
+            .orElseThrow(() -> new Exception("Post not found"));
+    var user =
+        userRepository
+            .findById(addMainCommentRequest.getUserId())
+            .orElseThrow(() -> new Exception("User not found"));
 
     var mainComment = new MainComment();
     mainComment.setCommentContents(addMainCommentRequest.getCommentContents());
@@ -66,15 +69,17 @@ public class CommentService {
   }
 
   public void addComment(AddSubCommentRequest addMainCommentRequest) throws Exception {
-    var mainComment = commentRepository
-        .findById(addMainCommentRequest.getMainCommentId())
-        .orElseThrow(() -> new Exception("Main comment not found"));
+    var mainComment =
+        commentRepository
+            .findById(addMainCommentRequest.getMainCommentId())
+            .orElseThrow(() -> new Exception("Main comment not found"));
     if (!(mainComment instanceof MainComment)) {
       throw new Exception("Main comment not found");
     }
-    var user = userRepository
-        .findById(addMainCommentRequest.getUserId())
-        .orElseThrow(() -> new Exception("User not found"));
+    var user =
+        userRepository
+            .findById(addMainCommentRequest.getUserId())
+            .orElseThrow(() -> new Exception("User not found"));
 
     var subComment = new SubComment();
     subComment.setCommentContents(addMainCommentRequest.getCommentContents());

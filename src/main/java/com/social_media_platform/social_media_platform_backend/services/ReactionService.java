@@ -15,35 +15,44 @@ import com.social_media_platform.social_media_platform_backend.repositiries.User
 
 @Service
 public class ReactionService {
-    private final ReactionRepository reactionRepository;
-    private final PostRepository postRepository;
-    private final ReactionTypeRepository reactionTypeRepository;
-    private final CommentRepository commentRepository;
-    private final UserRepository userRepository;
+  private final ReactionRepository reactionRepository;
+  private final PostRepository postRepository;
+  private final ReactionTypeRepository reactionTypeRepository;
+  private final CommentRepository commentRepository;
+  private final UserRepository userRepository;
 
-    public ReactionService(ReactionRepository reactionRepository, PostRepository postRepository,
-            ReactionTypeRepository reactionTypeRepository, CommentRepository commentRepository,
-            UserRepository userRepository) {
-        this.reactionRepository = reactionRepository;
-        this.postRepository = postRepository;
-        this.reactionTypeRepository = reactionTypeRepository;
-        this.commentRepository = commentRepository;
-        this.userRepository = userRepository;
-    }
+  public ReactionService(
+      ReactionRepository reactionRepository,
+      PostRepository postRepository,
+      ReactionTypeRepository reactionTypeRepository,
+      CommentRepository commentRepository,
+      UserRepository userRepository) {
+    this.reactionRepository = reactionRepository;
+    this.postRepository = postRepository;
+    this.reactionTypeRepository = reactionTypeRepository;
+    this.commentRepository = commentRepository;
+    this.userRepository = userRepository;
+  }
 
-    public void addPostReaction(Long postId, Long reactionTypeId, Long userId) throws Exception {
-        User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User not found"));
-        Post post = postRepository.findById(postId).orElseThrow(() -> new Exception("Post not found"));
-        ReactionType reactionType = reactionTypeRepository.findById(reactionTypeId)
-                .orElseThrow(() -> new Exception("Reaction type not found"));
-        reactionRepository.save(new Reaction(post, reactionType, user));
-    }
+  public void addPostReaction(Long postId, Long reactionTypeId, Long userId) throws Exception {
+    User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User not found"));
+    Post post = postRepository.findById(postId).orElseThrow(() -> new Exception("Post not found"));
+    ReactionType reactionType =
+        reactionTypeRepository
+            .findById(reactionTypeId)
+            .orElseThrow(() -> new Exception("Reaction type not found"));
+    reactionRepository.save(new Reaction(post, reactionType, user));
+  }
 
-    public void addCommentReaction(Long commentId, Long reactionTypeId, Long userId) throws Exception {
-        User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User not found"));
-        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new Exception("Comment not found"));
-        ReactionType reactionType = reactionTypeRepository.findById(reactionTypeId)
-                .orElseThrow(() -> new Exception("Reaction type not found"));
-        reactionRepository.save(new Reaction(comment, reactionType, user));
-    }
+  public void addCommentReaction(Long commentId, Long reactionTypeId, Long userId)
+      throws Exception {
+    User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User not found"));
+    Comment comment =
+        commentRepository.findById(commentId).orElseThrow(() -> new Exception("Comment not found"));
+    ReactionType reactionType =
+        reactionTypeRepository
+            .findById(reactionTypeId)
+            .orElseThrow(() -> new Exception("Reaction type not found"));
+    reactionRepository.save(new Reaction(comment, reactionType, user));
+  }
 }

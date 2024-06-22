@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class AddCommentReaction {
-    private Long commentId;
-    private Long reactionTypeId;
-    private Long userId;
+  private Long commentId;
+  private Long reactionTypeId;
+  private Long userId;
 }

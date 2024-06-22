@@ -26,8 +26,7 @@ public class Reaction {
   @JoinColumn(name = "userId")
   private User user;
 
-  public Reaction() {
-  }
+  public Reaction() {}
 
   public Reaction(Post post, ReactionType reactionType, User user) {
     this.post = post;
