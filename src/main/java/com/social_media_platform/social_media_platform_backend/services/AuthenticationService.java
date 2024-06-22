@@ -1,5 +1,6 @@
 package com.social_media_platform.social_media_platform_backend.services;
 
+import com.social_media_platform.social_media_platform_backend.Errors.UserAlreadyExistsException;
 import com.social_media_platform.social_media_platform_backend.repositiries.UserRepository;
 import com.social_media_platform.social_media_platform_backend.Helpers.AuthenticationResponse;
 import com.social_media_platform.social_media_platform_backend.Helpers.AuthenticationRequest;
@@ -10,6 +11,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AuthenticationService {
@@ -41,11 +44,22 @@ public class AuthenticationService {
   }
 
   public AuthenticationResponse register(RegisterRequest request) {
+    String username = request.getUsername();
+    String email = request.getEmail();
+    String password = request.getPassword();
+    Optional<User> existingUserEmail= userRepository.findByEmail(email);
+    if (existingUserEmail.isPresent()) {
+      throw new UserAlreadyExistsException("User with this email already exists");
+    }
+    Optional<User> existingUserUsername= userRepository.findByUsername(username);
+    if (existingUserUsername.isPresent()) {
+      throw new UserAlreadyExistsException("User with this username already exists");
+    }
     User user =
         new User(
-            request.getUsername(),
-            request.getEmail(),
-            passwordEncoder.encode(request.getPassword()));
+            username,
+            email,
+            passwordEncoder.encode(password));
     userRepository.save(user);
     String jwtToken = jwtService.generateToken(user);
     return new AuthenticationResponse(jwtToken);

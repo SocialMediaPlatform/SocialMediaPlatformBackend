@@ -1,5 +1,6 @@
 package com.social_media_platform.social_media_platform_backend.controllers;
 
+import com.social_media_platform.social_media_platform_backend.Errors.UserAlreadyExistsException;
 import com.social_media_platform.social_media_platform_backend.Helpers.AuthenticationRequest;
 import com.social_media_platform.social_media_platform_backend.Helpers.AuthenticationResponse;
 import com.social_media_platform.social_media_platform_backend.Helpers.RegisterRequest;
@@ -28,7 +29,12 @@ public class AuthenticationController {
   }
 
   @PostMapping("register")
-  public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
-    return new ResponseEntity<>(authenticationService.register(request), HttpStatus.OK);
+  public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+    try {
+      AuthenticationResponse response = authenticationService.register(request);
+      return new ResponseEntity<>(response, HttpStatus.OK);
+    } catch (UserAlreadyExistsException e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+    }
   }
 }
