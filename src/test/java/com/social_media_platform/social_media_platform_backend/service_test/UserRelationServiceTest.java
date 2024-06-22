@@ -17,25 +17,23 @@ import com.social_media_platform.social_media_platform_backend.services.UserRela
 
 @SpringBootTest
 public class UserRelationServiceTest {
-    @Autowired
-    UserRelationService userRelationService;
+  @Autowired UserRelationService userRelationService;
 
-    @MockBean
-    UserRelationRepository userRelationRepository;
+  @MockBean UserRelationRepository userRelationRepository;
 
-    @Test
-    void getFollowedUsers() throws Exception {
-        User user = new User();
-        User user2 = new User();
-        user.setUserId(1L);
-        user2.setUserId(2L);
-        RelationType relationType = new RelationType(1L, "FOLLOW");
-        UserRelation userRelation = new UserRelation(user, relationType, user2);
-        when(userRelationRepository.findFollowedUsers(1L)).thenReturn(Arrays.asList(userRelation));
+  @Test
+  void getFollowedUsers() throws Exception {
+    User user = new User();
+    User user2 = new User();
+    user.setUserId(1L);
+    user2.setUserId(2L);
+    RelationType relationType = new RelationType(1L, "FOLLOW");
+    UserRelation userRelation = new UserRelation(user, relationType, user2);
+    when(userRelationRepository.findFollowedUsers(1L)).thenReturn(Arrays.asList(userRelation));
 
-        var userRelations = userRelationService.getfollowedUsers(1L);
+    var userRelations = userRelationService.getfollowedUsers(1L);
 
-        assert (userRelations.size() == 1);
-        assert (userRelations.get(0).getTargetUser().getUserId() == 2L);
-    }
+    assert (userRelations.size() == 1);
+    assert (userRelations.get(0).getTargetUser().getUserId() == 2L);
+  }
 }

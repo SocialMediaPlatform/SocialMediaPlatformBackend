@@ -17,8 +17,7 @@ public class CommentResponse {
 
   private List<CommentResponse> replies;
 
-  public CommentResponse() {
-  }
+  public CommentResponse() {}
 
   public CommentResponse(Comment comment) {
     this.setCommentId(comment.getCommentId());

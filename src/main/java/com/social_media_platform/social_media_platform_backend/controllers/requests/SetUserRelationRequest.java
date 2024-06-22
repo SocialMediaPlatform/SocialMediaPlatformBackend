@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class SetUserRelationRequest {
-    private Long userId;
-    private Long targetUserId;
-    private Long relationTypeId;
+  private Long userId;
+  private Long targetUserId;
+  private Long relationTypeId;
 }

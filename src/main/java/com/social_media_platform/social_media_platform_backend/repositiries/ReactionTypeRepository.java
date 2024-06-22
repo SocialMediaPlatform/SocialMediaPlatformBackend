@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 import com.social_media_platform.social_media_platform_backend.databaseTables.ReactionType;
 
 @Repository
-public interface ReactionTypeRepository extends JpaRepository<ReactionType, Long> {
-}
+public interface ReactionTypeRepository extends JpaRepository<ReactionType, Long> {}

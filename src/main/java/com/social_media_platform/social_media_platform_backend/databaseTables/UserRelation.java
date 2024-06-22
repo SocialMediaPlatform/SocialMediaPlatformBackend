@@ -22,8 +22,7 @@ public class UserRelation {
   @JoinColumn(name = "targetUserId", nullable = false)
   private User targetUser;
 
-  public UserRelation() {
-  }
+  public UserRelation() {}
 
   public UserRelation(User user, RelationType relationType, User targetUser) {
     this.user = user;

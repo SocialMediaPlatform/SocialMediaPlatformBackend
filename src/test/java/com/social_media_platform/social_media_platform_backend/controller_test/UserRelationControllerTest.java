@@ -19,25 +19,23 @@ import com.social_media_platform.social_media_platform_backend.services.UserRela
 
 @SpringBootTest
 public class UserRelationControllerTest {
-    @Autowired
-    UserRelationController userRelationController;
+  @Autowired UserRelationController userRelationController;
 
-    @MockBean
-    UserRelationService userRelationService;
+  @MockBean UserRelationService userRelationService;
 
-    @Test
-    void getFollowedUsersTest() throws Exception {
-        User user = new User();
-        User user2 = new User();
-        user.setUserId(1L);
-        user2.setUserId(2L);
-        RelationType relationType = new RelationType(1L, "FOLLOW");
-        UserRelation userRelation = new UserRelation(user, relationType, user2);
-        when(userRelationService.getfollowedUsers(1L)).thenReturn(Arrays.asList(userRelation));
+  @Test
+  void getFollowedUsersTest() throws Exception {
+    User user = new User();
+    User user2 = new User();
+    user.setUserId(1L);
+    user2.setUserId(2L);
+    RelationType relationType = new RelationType(1L, "FOLLOW");
+    UserRelation userRelation = new UserRelation(user, relationType, user2);
+    when(userRelationService.getfollowedUsers(1L)).thenReturn(Arrays.asList(userRelation));
 
-        var userRelations = userRelationController.getFollowed(1L);
-        assertThat(userRelations.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(userRelations.getBody().size()).isEqualTo(1);
-        assertThat(userRelations.getBody().get(0).getUserId()).isEqualTo(2L);
-    }
+    var userRelations = userRelationController.getFollowed(1L);
+    assertThat(userRelations.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(userRelations.getBody().size()).isEqualTo(1);
+    assertThat(userRelations.getBody().get(0).getUserId()).isEqualTo(2L);
+  }
 }
