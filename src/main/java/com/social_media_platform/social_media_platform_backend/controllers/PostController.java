@@ -10,15 +10,19 @@ import org.springframework.web.bind.annotation.*;
 import com.social_media_platform.social_media_platform_backend.controllers.requests.AddPostRequest;
 import com.social_media_platform.social_media_platform_backend.controllers.responses.PostResponse;
 import com.social_media_platform.social_media_platform_backend.databaseTables.Post;
+import com.social_media_platform.social_media_platform_backend.databaseTables.User;
 import com.social_media_platform.social_media_platform_backend.services.PostService;
+import com.social_media_platform.social_media_platform_backend.services.UserRelationService;
 
 @RestController
 @RequestMapping("/api/v1/post")
 public class PostController {
   private final PostService postService;
+  private final UserRelationService userRelationService;
 
-  public PostController(PostService postService) {
+  public PostController(PostService postService, UserRelationService userRelationService) {
     this.postService = postService;
+    this.userRelationService = userRelationService;
   }
 
   @GetMapping("{userId}")
@@ -39,5 +43,22 @@ public class PostController {
       System.out.println(e.getMessage());
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
+
+  @GetMapping("followed/{userId}")
+  public ResponseEntity<List<PostResponse>> getFollowedPosts(@PathVariable Long userId) {
+    List<User> users = new ArrayList<>();
+    try {
+      for (var userRelation : userRelationService.getfollowedUsers(userId)) {
+        users.add(userRelation.getTargetUser());
+      }
+    } catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    List<PostResponse> postResponses = new ArrayList<>();
+    for (var post : postService.getUsersPosts(users)) {
+      postResponses.add(new PostResponse(post));
+    }
+    return new ResponseEntity<>(postResponses, HttpStatus.OK);
   }
 }
