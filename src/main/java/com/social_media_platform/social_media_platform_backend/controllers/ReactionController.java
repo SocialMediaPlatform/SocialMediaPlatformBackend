@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.social_media_platform.social_media_platform_backend.controllers.requests.AddCommentReaction;
 import com.social_media_platform.social_media_platform_backend.controllers.requests.AddPostReaction;
 import com.social_media_platform.social_media_platform_backend.services.ReactionService;
 
@@ -32,10 +33,9 @@ public class ReactionController {
     }
 
     @PostMapping("addCommentReaction")
-    public ResponseEntity<?> addCommentReaction(@RequestBody AddPostReaction addPostReaction) {
+    public ResponseEntity<?> addCommentReaction(@RequestBody AddCommentReaction addCommentReaction) {
         try {
-            reactionService.addCommentReaction(addPostReaction.getPostId(), addPostReaction.getReactionTypeId(),
-                    addPostReaction.getUserId());
+            reactionService.addCommentReaction(addCommentReaction.getCommentId(), addCommentReaction.getReactionTypeId(), addCommentReaction.getUserId());
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             System.out.println(e.getMessage());
