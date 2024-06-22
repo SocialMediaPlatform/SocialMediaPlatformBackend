@@ -47,19 +47,15 @@ public class AuthenticationService {
     String username = request.getUsername();
     String email = request.getEmail();
     String password = request.getPassword();
-    Optional<User> existingUserEmail= userRepository.findByEmail(email);
+    Optional<User> existingUserEmail = userRepository.findByEmail(email);
     if (existingUserEmail.isPresent()) {
       throw new UserAlreadyExistsException("User with this email already exists");
     }
-    Optional<User> existingUserUsername= userRepository.findByUsername(username);
+    Optional<User> existingUserUsername = userRepository.findByUsername(username);
     if (existingUserUsername.isPresent()) {
       throw new UserAlreadyExistsException("User with this username already exists");
     }
-    User user =
-        new User(
-            username,
-            email,
-            passwordEncoder.encode(password));
+    User user = new User(username, email, passwordEncoder.encode(password));
     userRepository.save(user);
     String jwtToken = jwtService.generateToken(user);
     return new AuthenticationResponse(jwtToken);

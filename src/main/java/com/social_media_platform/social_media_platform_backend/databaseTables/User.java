@@ -2,10 +2,8 @@ package com.social_media_platform.social_media_platform_backend.databaseTables;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -42,13 +40,13 @@ public class User implements UserDetails {
       inverseJoinColumns = @JoinColumn(name = "conversationId"))
   private Set<Conversation> conversations;
 
-    public User(String username, String email, String password) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
+  public User(String username, String email, String password) {
+    this.username = username;
+    this.email = email;
+    this.password = password;
+  }
 
-    @Override
+  @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return Collections.emptyList();
   }
