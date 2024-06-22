@@ -33,11 +33,11 @@ public class User implements UserDetails {
   @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private Set<ConversationMessage> conversationMessages;
 
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private Set<Reaction> reactions;
+
   @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(
-      name = "user_conversation",
-      joinColumns = @JoinColumn(name = "userId"),
-      inverseJoinColumns = @JoinColumn(name = "conversationId"))
+  @JoinTable(name = "user_conversation", joinColumns = @JoinColumn(name = "userId"), inverseJoinColumns = @JoinColumn(name = "conversationId"))
   private Set<Conversation> conversations;
 
   public User(String username, String email, String password) {

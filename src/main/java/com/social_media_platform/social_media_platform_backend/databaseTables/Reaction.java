@@ -21,4 +21,23 @@ public class Reaction {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "commentId")
   private Comment comment;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "userId")
+  private User user;
+
+  public Reaction() {
+  }
+
+  public Reaction(Post post, ReactionType reactionType, User user) {
+    this.post = post;
+    this.reactionType = reactionType;
+    this.user = user;
+  }
+
+  public Reaction(Comment comment, ReactionType reactionType, User user) {
+    this.comment = comment;
+    this.reactionType = reactionType;
+    this.user = user;
+  }
 }
