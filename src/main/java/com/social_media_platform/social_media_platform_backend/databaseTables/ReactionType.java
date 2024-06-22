@@ -8,9 +8,16 @@ import java.util.Set;
 @Data
 @Entity
 public class ReactionType {
-  private @Id Integer reactionTypeId;
+  private @Id Long reactionTypeId;
   private String reactionTypeName;
 
   @OneToMany(mappedBy = "reactionType", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private Set<Reaction> reactions;
+
+  public ReactionType(Long reactionTypeId, String reactionTypeName) {
+    this.reactionTypeId = reactionTypeId;
+    this.reactionTypeName = reactionTypeName;
+  }
+
+  public ReactionType() {}
 }
