@@ -20,14 +20,14 @@ public class UserRelation {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "targetUserId", nullable = false)
-  private User target_user;
+  private User targetUser;
 
   public UserRelation() {
   }
 
-  public UserRelation(User user, RelationType relationType, User target_user) {
+  public UserRelation(User user, RelationType relationType, User targetUser) {
     this.user = user;
     this.relationType = relationType;
-    this.target_user = target_user;
+    this.targetUser = targetUser;
   }
 }
