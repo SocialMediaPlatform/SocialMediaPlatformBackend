@@ -1,21 +1,16 @@
 package com.social_media_platform.social_media_platform_backend.services;
 
-import com.social_media_platform.social_media_platform_backend.Errors.EmailNotFoundException;
 import com.social_media_platform.social_media_platform_backend.Errors.UserAlreadyExistsException;
 import com.social_media_platform.social_media_platform_backend.Helpers.RegistrationMailSender;
-import com.social_media_platform.social_media_platform_backend.repositiries.PasswordResetTokenRepository;
 import com.social_media_platform.social_media_platform_backend.repositiries.UserRepository;
 import com.social_media_platform.social_media_platform_backend.Helpers.AuthenticationResponse;
 import com.social_media_platform.social_media_platform_backend.Helpers.AuthenticationRequest;
 import com.social_media_platform.social_media_platform_backend.Helpers.RegisterRequest;
 import com.social_media_platform.social_media_platform_backend.databaseTables.User;
 import jakarta.mail.MessagingException;
-import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,13 +27,14 @@ public class AuthenticationService {
   private final PasswordResetTokenService passwordResetTokenService;
 
   private final RegistrationMailSender registrationMailSender;
+
   public AuthenticationService(
-          UserRepository userRepository,
-          PasswordEncoder passwordEncoder,
-          JwtService jwtService,
-          AuthenticationManager authenticationManager,
-          PasswordResetTokenService passwordResetTokenService,
-          RegistrationMailSender registrationMailSender) {
+      UserRepository userRepository,
+      PasswordEncoder passwordEncoder,
+      JwtService jwtService,
+      AuthenticationManager authenticationManager,
+      PasswordResetTokenService passwordResetTokenService,
+      RegistrationMailSender registrationMailSender) {
     this.userRepository = userRepository;
     this.passwordEncoder = passwordEncoder;
     this.jwtService = jwtService;
@@ -76,31 +72,36 @@ public class AuthenticationService {
     return new AuthenticationResponse(jwtToken);
   }
 
-  public String forgetPassword(String mail, HttpServletRequest servletRequest) throws MessagingException, UnsupportedEncodingException {
+  public String forgetPassword(String mail, HttpServletRequest servletRequest)
+      throws MessagingException, UnsupportedEncodingException {
 
     Optional<User> user = userRepository.findByEmail(mail);
     String passwordResetUrl = "";
     if (user.isPresent()) {
       String passwordResetToken = UUID.randomUUID().toString();
       passwordResetTokenService.createPasswordResetTokenForUser(user.get(), passwordResetToken);
-      passwordResetUrl = passwordResetEmailLink(user.get(), applicationUrl(servletRequest), passwordResetToken);
+      passwordResetUrl =
+          passwordResetEmailLink(user.get(), applicationUrl(servletRequest), passwordResetToken);
     }
     return passwordResetUrl;
   }
 
-  private String passwordResetEmailLink(User user, String applicationUrl,
-                                        String passwordToken) throws MessagingException, UnsupportedEncodingException {
-    String url = applicationUrl+"/register/reset-password?token="+passwordToken;
+  private String passwordResetEmailLink(User user, String applicationUrl, String passwordToken)
+      throws MessagingException, UnsupportedEncodingException {
+    String url = applicationUrl + "/register/reset-password?token=" + passwordToken;
     registrationMailSender.sendVerificationEmail(user, url);
     return url;
   }
 
   public String applicationUrl(HttpServletRequest request) {
-    return "http://"+request.getServerName()+":"
-            +request.getServerPort()+request.getContextPath();
+    return "http://"
+        + request.getServerName()
+        + ":"
+        + request.getServerPort()
+        + request.getContextPath();
   }
 
-  public String resetPassword(String token, String newPassword){
+  public String resetPassword(String token, String newPassword) {
     String tokenVerificationResult = passwordResetTokenService.validatePasswordResetToken(token);
     if (!tokenVerificationResult.equalsIgnoreCase("valid")) {
       return "Invalid token password reset token";

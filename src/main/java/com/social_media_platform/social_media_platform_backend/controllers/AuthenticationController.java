@@ -38,12 +38,15 @@ public class AuthenticationController {
   }
 
   @PostMapping("/password-reset-request")
-  public ResponseEntity<?> resetPasswordRequest(@RequestBody PasswordResetRequest passwordResetRequest,
-                                                final HttpServletRequest servletRequest) {
+  public ResponseEntity<?> resetPasswordRequest(
+      @RequestBody PasswordResetRequest passwordResetRequest,
+      final HttpServletRequest servletRequest) {
     try {
-      String passwordResetUrl = authenticationService.forgetPassword(passwordResetRequest.getEmail(), servletRequest);
+      String passwordResetUrl =
+          authenticationService.forgetPassword(passwordResetRequest.getEmail(), servletRequest);
       if (!passwordResetUrl.isEmpty()) {
-        return new ResponseEntity<>("Password reset link has been sent to your email", HttpStatus.OK);
+        return new ResponseEntity<>(
+            "Password reset link has been sent to your email", HttpStatus.OK);
       } else {
         return new ResponseEntity<>("User with this email not found", HttpStatus.NOT_FOUND);
       }
@@ -53,7 +56,7 @@ public class AuthenticationController {
   }
 
   @PostMapping("/reset-password")
-  public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordReq req ) {
+  public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordReq req) {
     String newPassword = req.getPassword();
     String token = req.getToken();
     String result = authenticationService.resetPassword(token, newPassword);
