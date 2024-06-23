@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.social_media_platform.social_media_platform_backend.controllers.requests.AddCommentReaction;
 import com.social_media_platform.social_media_platform_backend.controllers.requests.AddPostReaction;
-import com.social_media_platform.social_media_platform_backend.controllers.requests.RemoveCommentReaction;
-import com.social_media_platform.social_media_platform_backend.controllers.requests.RemovePostReaction;
+import com.social_media_platform.social_media_platform_backend.controllers.requests.UserCommentReactionRequest;
+import com.social_media_platform.social_media_platform_backend.controllers.requests.UserPostReactionRequest;
 import com.social_media_platform.social_media_platform_backend.services.ReactionService;
 
 @RestController
@@ -52,7 +52,7 @@ public class ReactionController {
   }
 
   @DeleteMapping("removePostReaction")
-  public ResponseEntity<?> removePostReaction(@RequestBody RemovePostReaction removePostReaction) {
+  public ResponseEntity<?> removePostReaction(@RequestBody UserPostReactionRequest removePostReaction) {
     try {
       reactionService.removePostReaction(
           removePostReaction.getPostId(), removePostReaction.getUserId());
@@ -65,7 +65,7 @@ public class ReactionController {
 
   @DeleteMapping("removeCommentReaction")
   public ResponseEntity<?> removeCommentReaction(
-      @RequestBody RemoveCommentReaction removeCommentReaction) {
+      @RequestBody UserCommentReactionRequest removeCommentReaction) {
     try {
       reactionService.removeCommentReaction(
           removeCommentReaction.getCommentId(), removeCommentReaction.getUserId());
