@@ -6,6 +6,19 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+  mail:
+    host: smtp.gmail.com
+    username: test@gmail.com
+    password: test
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 jwt:
   secretKey: ${SECRET_KEY}
   expirationTime: ${EXPIRATION_TIME}
+mail:
+  tokenExpiration: 10000
