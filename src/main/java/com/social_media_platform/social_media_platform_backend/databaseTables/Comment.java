@@ -18,7 +18,7 @@ public abstract class Comment {
   private String commentContents;
   private Date commentDate;
 
-  @OneToMany(fetch = FetchType.LAZY)
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "reactionId")
   private Set<Reaction> reaction;
 
