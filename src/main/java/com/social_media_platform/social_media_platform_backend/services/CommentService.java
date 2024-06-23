@@ -8,11 +8,13 @@ import org.springframework.stereotype.Service;
 
 import com.social_media_platform.social_media_platform_backend.repositiries.CommentRepository;
 import com.social_media_platform.social_media_platform_backend.repositiries.PostRepository;
+import com.social_media_platform.social_media_platform_backend.repositiries.ReactionRepository;
 import com.social_media_platform.social_media_platform_backend.repositiries.UserRepository;
 import com.social_media_platform.social_media_platform_backend.controllers.requests.AddMainCommentRequest;
 import com.social_media_platform.social_media_platform_backend.controllers.requests.AddSubCommentRequest;
 import com.social_media_platform.social_media_platform_backend.databaseTables.Comment;
 import com.social_media_platform.social_media_platform_backend.databaseTables.MainComment;
+import com.social_media_platform.social_media_platform_backend.databaseTables.Reaction;
 import com.social_media_platform.social_media_platform_backend.databaseTables.SubComment;
 
 @Service
@@ -20,14 +22,17 @@ public class CommentService {
   private final CommentRepository commentRepository;
   private final PostRepository postRepository;
   private final UserRepository userRepository;
+  private final ReactionRepository reactionRepository;
 
   public CommentService(
       CommentRepository commentRepository,
       PostRepository postRepository,
-      UserRepository userRepository) {
+      UserRepository userRepository,
+      ReactionRepository reactionRepository) {
     this.commentRepository = commentRepository;
     this.postRepository = postRepository;
     this.userRepository = userRepository;
+    this.reactionRepository = reactionRepository;
   }
 
   public List<Comment> getCommentsInPost(Long postId) throws Exception {
@@ -83,5 +88,10 @@ public class CommentService {
     subComment.setUser(user);
 
     commentRepository.save(subComment);
+  }
+
+  public List<Reaction> getCommentReactions(Long commentId) throws Exception {
+    commentRepository.findById(commentId).orElseThrow(() -> new Exception("Comment not found"));
+    return reactionRepository.getCommReactions(commentId);
   }
 }

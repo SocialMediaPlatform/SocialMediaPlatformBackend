@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.Set;
 
 @Data
 @Entity
@@ -18,9 +17,9 @@ public abstract class Comment {
   private String commentContents;
   private Date commentDate;
 
-  @OneToMany(fetch = FetchType.LAZY)
-  @JoinColumn(name = "reactionId")
-  private Set<Reaction> reaction;
+  // @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  // @JoinColumn(name = "reactionId")
+  // private Set<Reaction> reaction;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "userId")

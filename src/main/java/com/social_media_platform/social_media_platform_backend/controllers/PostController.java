@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.social_media_platform.social_media_platform_backend.controllers.requests.AddPostRequest;
 import com.social_media_platform.social_media_platform_backend.controllers.responses.PostResponse;
+import com.social_media_platform.social_media_platform_backend.controllers.responses.PostReactionResponse;
 import com.social_media_platform.social_media_platform_backend.databaseTables.Post;
 import com.social_media_platform.social_media_platform_backend.services.PostService;
 
@@ -34,6 +35,21 @@ public class PostController {
   public ResponseEntity<?> createPost(@RequestBody AddPostRequest post) {
     try {
       postService.createPost(post.getUserId(), new Post(post.getPostDate(), post.getPostContent()));
+      return new ResponseEntity<>(HttpStatus.CREATED);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @PostMapping("reactions/{postId}")
+  public ResponseEntity<?> addPostReaction(
+      @PathVariable Long postId, @RequestParam Long reactionTypeId, @RequestParam Long userId) {
+    try {
+      List<PostReactionResponse> reactions = new ArrayList<>();
+      for (var reaction : postService.getPostReactions(postId)) {
+        reactions.add(new PostReactionResponse(reaction));
+      }
       return new ResponseEntity<>(HttpStatus.CREATED);
     } catch (Exception e) {
       System.out.println(e.getMessage());
