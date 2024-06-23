@@ -57,7 +57,7 @@ public class ReactionService {
     userRepository.findById(userId).orElseThrow(() -> new Exception("User not found"));
     postRepository.findById(postId).orElseThrow(() -> new Exception("Post not found"));
     Reaction reaction = reactionRepository
-        .findByPostIdAndUserId(postId, userId);
+        .findByPostIdAndUserId(postId, userId).stream().findFirst().orElse(null);
     if (reaction == null) {
       throw new Exception("Reaction not found");
     }
