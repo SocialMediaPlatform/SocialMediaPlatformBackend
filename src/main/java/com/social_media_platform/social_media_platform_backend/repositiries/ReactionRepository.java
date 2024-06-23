@@ -19,7 +19,9 @@ public interface ReactionRepository extends JpaRepository<Reaction, Long> {
   @Query("SELECT r FROM Reaction r WHERE r.post.postId = :postId AND r.user.userId = :userId")
   List<Reaction> findByPostIdAndUserId(Long postId, Long userId);
 
-  @Query(
-      "SELECT r FROM Reaction r WHERE r.comment.commentId = :commentId AND r.user.userId = :userId")
+  @Query("SELECT r FROM Reaction r WHERE r.comment.commentId = :commentId AND r.user.userId = :userId")
   List<Reaction> findByCommentIdAndUserId(Long commentId, Long userId);
+
+  @Query("SELECT COUNT(r) FROM Reaction r WHERE r.post.postId = :postId")
+  int getPostReactionsCount(Long postId);
 }

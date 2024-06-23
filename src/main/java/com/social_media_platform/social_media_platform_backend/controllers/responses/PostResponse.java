@@ -12,11 +12,17 @@ public class PostResponse {
   private Date postDate;
   private String postContent;
   private UserResponse user;
+  private int reactionsCount;
+  private int commentsCount;
+  private PostReactionResponse postReactionResponse;
 
-  public PostResponse(Post post) {
+  public PostResponse(Post post, int reactionsCount, int commentsCount, PostReactionResponse postReactionResponse) {
     this.postId = post.getPostId();
     this.postDate = post.getPostDate();
     this.postContent = post.getPostContent();
     this.user = new UserResponse(post.getUser());
+    this.reactionsCount = reactionsCount;
+    this.commentsCount = commentsCount;
+    this.postReactionResponse = postReactionResponse;
   }
 }
