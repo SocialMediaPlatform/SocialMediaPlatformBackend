@@ -88,7 +88,7 @@ public class AuthenticationService {
 
   private String passwordResetEmailLink(User user, String applicationUrl, String passwordToken)
       throws MessagingException, UnsupportedEncodingException {
-    String url = applicationUrl + "/register/reset-password?token=" + passwordToken;
+    String url = "http://localhost:3000" + "/register/reset-password?token=" + passwordToken;
     registrationMailSender.sendVerificationEmail(user, url);
     return url;
   }
