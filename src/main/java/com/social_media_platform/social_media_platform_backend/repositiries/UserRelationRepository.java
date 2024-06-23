@@ -14,6 +14,6 @@ public interface UserRelationRepository extends JpaRepository<UserRelation, Inte
       + " ur.relationType.relationTypeId = 1")
   List<UserRelation> findFollowedUsers(Long userId);
 
-  @Query("Select case when exists (Select * from UserRelation ur where ur.user.userId = :firstUserId and ur.targetUser.userId = :secondUserId and ur.relationType.relationTypeId = 2) then Cast(1 as BIT) else CAST(0 AS BIT) end")
+  @Query(value = "Select case when exists (Select * from user_relation ur where user_id = :firstUserId and target_user_id = :secondUserId and relation_type_id = 2) then Cast(1 as BIT) else CAST(0 AS BIT) end", nativeQuery = true)
   boolean areUsersBlocked(Long firstUserId, Long secondUserId);
 }
