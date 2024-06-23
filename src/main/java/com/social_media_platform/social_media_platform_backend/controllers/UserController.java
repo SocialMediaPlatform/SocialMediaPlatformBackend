@@ -24,9 +24,13 @@ public class UserController {
         this.jwtService = jwtService;
     }
 
-    @GetMapping()
-    public String getMethodName(@RequestParam String param) {
-        return new String();
+    @GetMapping({ "{userId}" })
+    public ResponseEntity<?> getUserInfo(@PathVariable Long userId) {
+        try {
+            return ResponseEntity.ok(userService.getUserInfo(userId));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PostMapping("setUsername/{newUsername}")
