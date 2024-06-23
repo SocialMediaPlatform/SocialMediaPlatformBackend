@@ -15,4 +15,11 @@ public interface ReactionRepository extends JpaRepository<Reaction, Long> {
 
   @Query("SELECT r FROM Reaction r WHERE r.comment.commentId = :commentId")
   List<Reaction> getCommReactions(Long commentId);
+
+  @Query("SELECT r FROM Reaction r WHERE r.post.postId = :postId AND r.user.userId = :userId")
+  Reaction findByPostIdAndUserId(Long postId, Long userId);
+
+  @Query("SELECT r FROM Reaction r WHERE r.comment.commentId = :commentId AND r.user.userId = :userId")
+  Reaction findByCommentIdAndUserId(Long commentId, Long userId);
+
 }

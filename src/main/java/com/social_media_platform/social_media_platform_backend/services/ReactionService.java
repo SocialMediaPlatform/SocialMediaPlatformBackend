@@ -37,22 +37,30 @@ public class ReactionService {
   public void addPostReaction(Long postId, Long reactionTypeId, Long userId) throws Exception {
     User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User not found"));
     Post post = postRepository.findById(postId).orElseThrow(() -> new Exception("Post not found"));
-    ReactionType reactionType =
-        reactionTypeRepository
-            .findById(reactionTypeId)
-            .orElseThrow(() -> new Exception("Reaction type not found"));
+    ReactionType reactionType = reactionTypeRepository
+        .findById(reactionTypeId)
+        .orElseThrow(() -> new Exception("Reaction type not found"));
     reactionRepository.save(new Reaction(post, reactionType, user));
   }
 
   public void addCommentReaction(Long commentId, Long reactionTypeId, Long userId)
       throws Exception {
     User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User not found"));
-    Comment comment =
-        commentRepository.findById(commentId).orElseThrow(() -> new Exception("Comment not found"));
-    ReactionType reactionType =
-        reactionTypeRepository
-            .findById(reactionTypeId)
-            .orElseThrow(() -> new Exception("Reaction type not found"));
+    Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new Exception("Comment not found"));
+    ReactionType reactionType = reactionTypeRepository
+        .findById(reactionTypeId)
+        .orElseThrow(() -> new Exception("Reaction type not found"));
     reactionRepository.save(new Reaction(comment, reactionType, user));
+  }
+
+  public void removePostReaction(Long postId, Long userId) throws Exception {
+    userRepository.findById(userId).orElseThrow(() -> new Exception("User not found"));
+    postRepository.findById(postId).orElseThrow(() -> new Exception("Post not found"));
+    Reaction reaction = reactionRepository
+        .findByPostIdAndUserId(postId, userId);
+    if (reaction == null) {
+      throw new Exception("Reaction not found");
+    }
+    reactionRepository.delete(reaction);
   }
 }
