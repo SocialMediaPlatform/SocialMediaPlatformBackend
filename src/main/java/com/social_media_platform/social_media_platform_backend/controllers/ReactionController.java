@@ -55,7 +55,8 @@ public class ReactionController {
   }
 
   @DeleteMapping("removePostReaction")
-  public ResponseEntity<?> removePostReaction(@RequestBody UserPostReactionRequest removePostReaction) {
+  public ResponseEntity<?> removePostReaction(
+      @RequestBody UserPostReactionRequest removePostReaction) {
     try {
       reactionService.removePostReaction(
           removePostReaction.getPostId(), removePostReaction.getUserId());
@@ -84,7 +85,8 @@ public class ReactionController {
     try {
       return new ResponseEntity<>(
           new PostReactionResponse(
-              reactionService.getUserPostReaction(postReaction.getPostId(), postReaction.getUserId())),
+              reactionService.getUserPostReaction(
+                  postReaction.getPostId(), postReaction.getUserId())),
           HttpStatus.OK);
     } catch (Exception e) {
       System.out.println(e.getMessage());
@@ -97,8 +99,9 @@ public class ReactionController {
       @RequestBody UserCommentReactionRequest commentReaction) {
     try {
       return new ResponseEntity<>(
-          new CommentReactionResponse(reactionService.getUserCommentReaction(
-              commentReaction.getCommentId(), commentReaction.getUserId())),
+          new CommentReactionResponse(
+              reactionService.getUserCommentReaction(
+                  commentReaction.getCommentId(), commentReaction.getUserId())),
           HttpStatus.OK);
     } catch (Exception e) {
       System.out.println(e.getMessage());

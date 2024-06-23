@@ -37,26 +37,30 @@ public class ReactionService {
   public void addPostReaction(Long postId, Long reactionTypeId, Long userId) throws Exception {
     User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User not found"));
     Post post = postRepository.findById(postId).orElseThrow(() -> new Exception("Post not found"));
-    ReactionType reactionType = reactionTypeRepository
-        .findById(reactionTypeId)
-        .orElseThrow(() -> new Exception("Reaction type not found"));
+    ReactionType reactionType =
+        reactionTypeRepository
+            .findById(reactionTypeId)
+            .orElseThrow(() -> new Exception("Reaction type not found"));
     reactionRepository.save(new Reaction(post, reactionType, user));
   }
 
   public void addCommentReaction(Long commentId, Long reactionTypeId, Long userId)
       throws Exception {
     User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User not found"));
-    Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new Exception("Comment not found"));
-    ReactionType reactionType = reactionTypeRepository
-        .findById(reactionTypeId)
-        .orElseThrow(() -> new Exception("Reaction type not found"));
+    Comment comment =
+        commentRepository.findById(commentId).orElseThrow(() -> new Exception("Comment not found"));
+    ReactionType reactionType =
+        reactionTypeRepository
+            .findById(reactionTypeId)
+            .orElseThrow(() -> new Exception("Reaction type not found"));
     reactionRepository.save(new Reaction(comment, reactionType, user));
   }
 
   public void removePostReaction(Long postId, Long userId) throws Exception {
     userRepository.findById(userId).orElseThrow(() -> new Exception("User not found"));
     postRepository.findById(postId).orElseThrow(() -> new Exception("Post not found"));
-    Reaction reaction = reactionRepository.findByPostIdAndUserId(postId, userId).stream().findFirst().orElse(null);
+    Reaction reaction =
+        reactionRepository.findByPostIdAndUserId(postId, userId).stream().findFirst().orElse(null);
     if (reaction == null) {
       throw new Exception("Reaction not found");
     }
@@ -66,9 +70,10 @@ public class ReactionService {
   public void removeCommentReaction(Long commentId, Long userId) throws Exception {
     userRepository.findById(userId).orElseThrow(() -> new Exception("User not found"));
     commentRepository.findById(commentId).orElseThrow(() -> new Exception("Comment not found"));
-    Reaction reaction = reactionRepository.findByCommentIdAndUserId(commentId, userId).stream()
-        .findFirst()
-        .orElse(null);
+    Reaction reaction =
+        reactionRepository.findByCommentIdAndUserId(commentId, userId).stream()
+            .findFirst()
+            .orElse(null);
     if (reaction == null) {
       throw new Exception("Reaction not found");
     }
@@ -78,12 +83,16 @@ public class ReactionService {
   public Reaction getUserPostReaction(Long postId, Long userId) throws Exception {
     userRepository.findById(userId).orElseThrow(() -> new Exception("User not found"));
     postRepository.findById(postId).orElseThrow(() -> new Exception("Post not found"));
-    return reactionRepository.findByPostIdAndUserId(postId, userId).stream().findFirst().orElse(null);
+    return reactionRepository.findByPostIdAndUserId(postId, userId).stream()
+        .findFirst()
+        .orElse(null);
   }
 
   public Reaction getUserCommentReaction(Long commentId, Long userId) throws Exception {
     userRepository.findById(userId).orElseThrow(() -> new Exception("User not found"));
     commentRepository.findById(commentId).orElseThrow(() -> new Exception("Comment not found"));
-    return reactionRepository.findByCommentIdAndUserId(commentId, userId).stream().findFirst().orElse(null);
+    return reactionRepository.findByCommentIdAndUserId(commentId, userId).stream()
+        .findFirst()
+        .orElse(null);
   }
 }
