@@ -1,8 +1,7 @@
 package com.social_media_platform.social_media_platform_backend.services;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -40,11 +39,14 @@ public class CommentService {
     return commentRepository.findByPostId(postId);
   }
 
-  public Set<SubComment> getSubComments(Long commentId) throws Exception {
+  public List<SubComment> getSubComments(Long commentId) throws Exception {
     commentRepository.findById(commentId).orElseThrow(() -> new Exception("Comment not found"));
-    Set<SubComment> subComments = new HashSet<SubComment>();
-    for (var comment : commentRepository.findByMainCommentId(commentId)) {
-      subComments.add((SubComment) comment);
+    List<SubComment> subComments = new ArrayList<SubComment>();
+    for (var comment : commentRepository.findAll()) {
+      if (comment instanceof SubComment
+          && ((SubComment) comment).getMainComment().getCommentId() == commentId) {
+        subComments.add((SubComment) comment);
+      }
     }
     return subComments;
   }

@@ -1,11 +1,11 @@
 [
     {
         "relationTypeId": 1,
-        "realtionTypeName": "friend"
+        "realtionTypeName": "following"
     },
     {
         "relationTypeId": 2,
-        "realtionTypeName": "follower"
+        "realtionTypeName": "muted"
     },
     {
         "relationTypeId": 3,
