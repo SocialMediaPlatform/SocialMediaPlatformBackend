@@ -13,8 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
-@ActiveProfiles("test-containers")
-@TestPropertySource(locations = "classpath:application-test-containers.yml")
 public class JwtServiceTest {
 
   @Autowired private JwtService jwtService;
