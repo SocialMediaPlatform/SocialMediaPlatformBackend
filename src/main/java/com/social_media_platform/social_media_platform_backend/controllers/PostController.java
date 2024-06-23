@@ -38,8 +38,7 @@ public class PostController {
     for (Post post : postService.getUserPosts(userId)) {
       PostReactionResponse userPostReaction = null;
       try {
-        userPostReaction =
-            new PostReactionResponse(reactionService.getUserPostReaction(post.getPostId(), userId));
+        userPostReaction = new PostReactionResponse(reactionService.getUserPostReaction(post.getPostId(), userId));
       } catch (Exception e) {
       }
       postResponses.add(
@@ -68,6 +67,9 @@ public class PostController {
     List<User> users = new ArrayList<>();
     try {
       for (var userRelation : userRelationService.getfollowedUsers(userId)) {
+        if (userRelationService.areUsersBlocked(userId, userRelation.getTargetUser().getUserId())) {
+          continue;
+        }
         users.add(userRelation.getTargetUser());
       }
     } catch (Exception e) {
@@ -77,8 +79,7 @@ public class PostController {
     for (var post : postService.getUsersPosts(users)) {
       PostReactionResponse userPostReaction = null;
       try {
-        userPostReaction =
-            new PostReactionResponse(reactionService.getUserPostReaction(post.getPostId(), userId));
+        userPostReaction = new PostReactionResponse(reactionService.getUserPostReaction(post.getPostId(), userId));
       } catch (Exception e) {
       }
       postResponses.add(

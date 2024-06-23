@@ -10,8 +10,10 @@ import com.social_media_platform.social_media_platform_backend.databaseTables.Us
 
 @Repository
 public interface UserRelationRepository extends JpaRepository<UserRelation, Integer> {
-  @Query(
-      "SELECT ur FROM UserRelation ur WHERE ur.user.userId = :userId and"
-          + " ur.relationType.relationTypeId = 1")
+  @Query("SELECT ur FROM UserRelation ur WHERE ur.user.userId = :userId and"
+      + " ur.relationType.relationTypeId = 1")
   List<UserRelation> findFollowedUsers(Long userId);
+
+  @Query("Select case when exists (Select * from UserRelation ur where ur.user.userId = :firstUserId and ur.targetUser.userId = :secondUserId and ur.relationType.relationTypeId = 2) then Cast(1 as BIT) else CAST(0 AS BIT) end")
+  boolean areUsersBlocked(Long firstUserId, Long secondUserId);
 }
