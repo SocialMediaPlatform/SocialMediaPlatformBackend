@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.social_media_platform.social_media_platform_backend.controllers.requests.AddCommentReaction;
 import com.social_media_platform.social_media_platform_backend.controllers.requests.AddPostReaction;
+import com.social_media_platform.social_media_platform_backend.controllers.requests.RemoveCommentReaction;
 import com.social_media_platform.social_media_platform_backend.controllers.requests.RemovePostReaction;
 import com.social_media_platform.social_media_platform_backend.services.ReactionService;
 
@@ -56,6 +57,19 @@ public class ReactionController {
       reactionService.removePostReaction(
           removePostReaction.getPostId(),
           removePostReaction.getUserId());
+      return new ResponseEntity<>(HttpStatus.OK);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @DeleteMapping("removeCommentReaction")
+  public ResponseEntity<?> removeCommentReaction(@RequestBody RemoveCommentReaction removeCommentReaction) {
+    try {
+      reactionService.removeCommentReaction(
+          removeCommentReaction.getCommentId(),
+          removeCommentReaction.getUserId());
       return new ResponseEntity<>(HttpStatus.OK);
     } catch (Exception e) {
       System.out.println(e.getMessage());

@@ -63,4 +63,15 @@ public class ReactionService {
     }
     reactionRepository.delete(reaction);
   }
+
+  public void removeCommentReaction(Long commentId, Long userId) throws Exception {
+    userRepository.findById(userId).orElseThrow(() -> new Exception("User not found"));
+    commentRepository.findById(commentId).orElseThrow(() -> new Exception("Comment not found"));
+    Reaction reaction = reactionRepository
+        .findByCommentIdAndUserId(commentId, userId).stream().findFirst().orElse(null);
+    if (reaction == null) {
+      throw new Exception("Reaction not found");
+    }
+    reactionRepository.delete(reaction);
+  }
 }
