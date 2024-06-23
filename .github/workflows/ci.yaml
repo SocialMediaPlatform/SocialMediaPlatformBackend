@@ -59,6 +59,13 @@ jobs:
       SPRING_DATASOURCE_PASSWORD: ${{ secrets.TEST_CONTAINER_PASSWORD }}
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
       EXPIRATION_TIME: ${{secrets.EXPIRATION_TIME }}
+      MAIL_HOST: ${{ secrets.MAIL_HOST }}
+      MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
+      MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+      MAIL_PORT: ${{ secrets.MAIL_PORT }}
+      MAIL_SMTP_AUTH: ${{ secrets.MAIL_SMTP_AUTH }}
+      MAIL_SMTP_STARTTLS_ENABLE: ${{ secrets.MAIL_SMTP_STARTTLS_ENABLE }}
+      MAIL_TOKEN_EXPIRATION: ${{ secrets.MAIL_TOKEN_EXPIRATION }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
