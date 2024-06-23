@@ -4,13 +4,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.social_media_platform.social_media_platform_backend.controllers.responses.UserResponse;
 import com.social_media_platform.social_media_platform_backend.services.JwtService;
 import com.social_media_platform.social_media_platform_backend.services.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 @Controller
@@ -27,7 +26,7 @@ public class UserController {
     @GetMapping({ "{userId}" })
     public ResponseEntity<?> getUserInfo(@PathVariable Long userId) {
         try {
-            return ResponseEntity.ok(userService.getUserInfo(userId));
+            return ResponseEntity.ok(new UserResponse(userService.getUserInfo(userId)));
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
