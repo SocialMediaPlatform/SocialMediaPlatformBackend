@@ -11,7 +11,6 @@ import com.social_media_platform.social_media_platform_backend.controllers.reque
 import com.social_media_platform.social_media_platform_backend.controllers.responses.PostResponse;
 import com.social_media_platform.social_media_platform_backend.controllers.responses.PostReactionResponse;
 import com.social_media_platform.social_media_platform_backend.databaseTables.Post;
-import com.social_media_platform.social_media_platform_backend.databaseTables.Reaction;
 import com.social_media_platform.social_media_platform_backend.databaseTables.User;
 import com.social_media_platform.social_media_platform_backend.services.PostService;
 import com.social_media_platform.social_media_platform_backend.services.ReactionService;
@@ -24,7 +23,9 @@ public class PostController {
   private final UserRelationService userRelationService;
   private final ReactionService reactionService;
 
-  public PostController(PostService postService, UserRelationService userRelationService,
+  public PostController(
+      PostService postService,
+      UserRelationService userRelationService,
       ReactionService reactionService) {
     this.postService = postService;
     this.userRelationService = userRelationService;
@@ -37,12 +38,16 @@ public class PostController {
     for (Post post : postService.getUserPosts(userId)) {
       PostReactionResponse userPostReaction = null;
       try {
-        userPostReaction = new PostReactionResponse(reactionService.getUserPostReaction(post.getPostId(), userId));
+        userPostReaction =
+            new PostReactionResponse(reactionService.getUserPostReaction(post.getPostId(), userId));
       } catch (Exception e) {
       }
-      postResponses.add(new PostResponse(post, postService.getPostReactionsCount(post.getPostId()),
-          postService.getPostCommentsCount(post.getPostId()),
-          userPostReaction));
+      postResponses.add(
+          new PostResponse(
+              post,
+              postService.getPostReactionsCount(post.getPostId()),
+              postService.getPostCommentsCount(post.getPostId()),
+              userPostReaction));
     }
     return new ResponseEntity<>(postResponses, HttpStatus.OK);
   }
@@ -72,12 +77,16 @@ public class PostController {
     for (var post : postService.getUsersPosts(users)) {
       PostReactionResponse userPostReaction = null;
       try {
-        userPostReaction = new PostReactionResponse(reactionService.getUserPostReaction(post.getPostId(), userId));
+        userPostReaction =
+            new PostReactionResponse(reactionService.getUserPostReaction(post.getPostId(), userId));
       } catch (Exception e) {
       }
-      postResponses.add(new PostResponse(post, postService.getPostReactionsCount(post.getPostId()),
-          postService.getPostCommentsCount(post.getPostId()),
-          userPostReaction));
+      postResponses.add(
+          new PostResponse(
+              post,
+              postService.getPostReactionsCount(post.getPostId()),
+              postService.getPostCommentsCount(post.getPostId()),
+              userPostReaction));
     }
     return new ResponseEntity<>(postResponses, HttpStatus.OK);
   }

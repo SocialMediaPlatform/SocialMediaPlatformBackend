@@ -16,7 +16,8 @@ public class PostResponse {
   private int commentsCount;
   private PostReactionResponse postReactionResponse;
 
-  public PostResponse(Post post, int reactionsCount, int commentsCount, PostReactionResponse postReactionResponse) {
+  public PostResponse(
+      Post post, int reactionsCount, int commentsCount, PostReactionResponse postReactionResponse) {
     this.postId = post.getPostId();
     this.postDate = post.getPostDate();
     this.postContent = post.getPostContent();

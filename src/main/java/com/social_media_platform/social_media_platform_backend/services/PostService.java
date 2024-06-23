@@ -22,7 +22,8 @@ public class PostService {
   public PostService(
       PostRepository postRepository,
       UserRepository userRepository,
-      ReactionRepository reactionRepository, CommentRepository commentRepository) {
+      ReactionRepository reactionRepository,
+      CommentRepository commentRepository) {
     this.postRepository = postRepository;
     this.userRepository = userRepository;
     this.reactionRepository = reactionRepository;
