@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class RemoveCommentReaction {
-    private Long commentId;
-    private Long userId;
+  private Long commentId;
+  private Long userId;
 }

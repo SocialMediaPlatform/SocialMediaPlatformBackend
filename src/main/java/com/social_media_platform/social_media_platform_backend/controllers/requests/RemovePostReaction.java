@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class RemovePostReaction {
-    private Long postId;
-    private Long userId;
+  private Long postId;
+  private Long userId;
 }
