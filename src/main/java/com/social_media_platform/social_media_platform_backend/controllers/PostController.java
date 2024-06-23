@@ -61,6 +61,7 @@ public class PostController {
       postResponses.add(new PostResponse(post));
     }
     return new ResponseEntity<>(postResponses, HttpStatus.OK);
+  }
 
   @PostMapping("reactions/{postId}")
   public ResponseEntity<?> addPostReaction(
