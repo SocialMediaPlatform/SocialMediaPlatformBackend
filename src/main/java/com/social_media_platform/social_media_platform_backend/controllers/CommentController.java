@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 
 import com.social_media_platform.social_media_platform_backend.controllers.requests.AddMainCommentRequest;
 import com.social_media_platform.social_media_platform_backend.controllers.requests.AddSubCommentRequest;
+import com.social_media_platform.social_media_platform_backend.controllers.responses.CommentReactionResponse;
 import com.social_media_platform.social_media_platform_backend.controllers.responses.CommentResponse;
 import com.social_media_platform.social_media_platform_backend.services.CommentService;
 
@@ -62,6 +63,20 @@ public class CommentController {
     try {
       commentService.addComment(addMainCommentRequest);
       return new ResponseEntity<>(HttpStatus.CREATED);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @GetMapping("reactions/{commentId}")
+  public ResponseEntity<?> getCommentReactions(@PathVariable Long commentId) {
+    try {
+      var reactions = new ArrayList<CommentReactionResponse>();
+      for (var reaction : commentService.getCommentReactions(commentId)) {
+        reactions.add(new CommentReactionResponse(reaction));
+      }
+      return new ResponseEntity<>(reactions, HttpStatus.OK);
     } catch (Exception e) {
       System.out.println(e.getMessage());
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

@@ -29,7 +29,9 @@ services:
           "spring.datasource.url"  : "jdbc:postgresql://postgresdb:${POSTGRESDB_DOCKER_PORT}/${POSTGRESDB_DATABASE}",
           "spring.datasource.username" : "$POSTGRESDB_USER",
           "spring.datasource.password" : "$POSTGRESDB_ROOT_PASSWORD",
-          "spring.jpa.hibernate.ddl-auto" : "update"
+          "spring.jpa.hibernate.ddl-auto" : "update",
+          "jwt.secretKey" : "$JWT_SECRET_KEY",
+          "jwt.expirationTime" : "$JWT_EXPIRATION_TIME"
         }'
     volumes:
       - .m2:/root/.m2
