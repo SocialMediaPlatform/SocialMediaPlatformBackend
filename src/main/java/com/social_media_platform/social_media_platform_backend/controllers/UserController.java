@@ -24,7 +24,7 @@ public class UserController {
     this.jwtService = jwtService;
   }
 
-  @GetMapping({ "{userId}" })
+  @GetMapping({"{userId}"})
   public ResponseEntity<?> getUserInfo(@PathVariable Long userId) {
     try {
       return ResponseEntity.ok(new UserResponse(userService.getUserInfo(userId)));
