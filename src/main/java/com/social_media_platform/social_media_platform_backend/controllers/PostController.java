@@ -12,6 +12,7 @@ import com.social_media_platform.social_media_platform_backend.controllers.respo
 import com.social_media_platform.social_media_platform_backend.controllers.responses.PostReactionResponse;
 import com.social_media_platform.social_media_platform_backend.databaseTables.Post;
 import com.social_media_platform.social_media_platform_backend.databaseTables.User;
+import com.social_media_platform.social_media_platform_backend.services.JwtService;
 import com.social_media_platform.social_media_platform_backend.services.PostService;
 import com.social_media_platform.social_media_platform_backend.services.ReactionService;
 import com.social_media_platform.social_media_platform_backend.services.UserRelationService;
@@ -22,14 +23,16 @@ public class PostController {
   private final PostService postService;
   private final UserRelationService userRelationService;
   private final ReactionService reactionService;
+  private final JwtService jwtService;
 
   public PostController(
       PostService postService,
       UserRelationService userRelationService,
-      ReactionService reactionService) {
+      ReactionService reactionService, JwtService jwtService) {
     this.postService = postService;
     this.userRelationService = userRelationService;
     this.reactionService = reactionService;
+    this.jwtService = jwtService;
   }
 
   @GetMapping("{userId}")
@@ -38,8 +41,7 @@ public class PostController {
     for (Post post : postService.getUserPosts(userId)) {
       PostReactionResponse userPostReaction = null;
       try {
-        userPostReaction =
-            new PostReactionResponse(reactionService.getUserPostReaction(post.getPostId(), userId));
+        userPostReaction = new PostReactionResponse(reactionService.getUserPostReaction(post.getPostId(), userId));
       } catch (Exception e) {
       }
       postResponses.add(
@@ -50,6 +52,25 @@ public class PostController {
               userPostReaction));
     }
     return new ResponseEntity<>(postResponses, HttpStatus.OK);
+  }
+
+  @GetMapping("post/{postId}")
+  public ResponseEntity<PostResponse> getPost(@PathVariable Long postId,
+      @RequestHeader(name = "Authorization") String token) {
+    try {
+      Post post = postService.getPost(postId);
+      var userPostReaction = new PostReactionResponse(
+          reactionService.getUserPostReaction(post.getPostId(), jwtService.extractUserId(token.split(" ")[1].trim())));
+      return new ResponseEntity<>(
+          new PostResponse(
+              post,
+              postService.getPostReactionsCount(post.getPostId()),
+              postService.getPostCommentsCount(post.getPostId()),
+              userPostReaction),
+          HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @PostMapping("add")
@@ -80,8 +101,7 @@ public class PostController {
     for (var post : postService.getUsersPosts(users)) {
       PostReactionResponse userPostReaction = null;
       try {
-        userPostReaction =
-            new PostReactionResponse(reactionService.getUserPostReaction(post.getPostId(), userId));
+        userPostReaction = new PostReactionResponse(reactionService.getUserPostReaction(post.getPostId(), userId));
       } catch (Exception e) {
       }
       postResponses.add(
