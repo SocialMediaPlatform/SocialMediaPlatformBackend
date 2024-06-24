@@ -35,7 +35,7 @@ public class UserController {
 
   @PostMapping("setUsername/{newUsername}")
   public ResponseEntity<?> postMethodName(
-          @PathVariable String newUsername, @RequestHeader(name = "Authorization") String token) {
+      @PathVariable String newUsername, @RequestHeader(name = "Authorization") String token) {
     try {
       userService.setUsername(jwtService.extractUserId(token.split(" ")[1].trim()), newUsername);
       return ResponseEntity.ok().build();
@@ -47,13 +47,13 @@ public class UserController {
 
   @PostMapping("changePassword")
   public ResponseEntity<?> changePassowrd(
-          @RequestBody ChangePasswordRequest changePasswordRequest,
-          @RequestHeader(name = "Authorization") String token) {
+      @RequestBody ChangePasswordRequest changePasswordRequest,
+      @RequestHeader(name = "Authorization") String token) {
     try {
       userService.setPassword(
-              jwtService.extractUserId(token.split(" ")[1].trim()),
-              changePasswordRequest.getOldPassword(),
-              changePasswordRequest.getNewPassword());
+          jwtService.extractUserId(token.split(" ")[1].trim()),
+          changePasswordRequest.getOldPassword(),
+          changePasswordRequest.getNewPassword());
       return ResponseEntity.ok().build();
     } catch (Exception e) {
       System.out.println(e.getMessage());
@@ -62,8 +62,11 @@ public class UserController {
   }
 
   @GetMapping("/search")
-  public ResponseEntity<List<User>> searchForUsers(@RequestParam String username, @RequestHeader(name = "Authorization") String token) {
-    List<User> users = userService.getNonBlockedUsers(username, jwtService.extractUserId(token.split(" ")[1].trim()));
+  public ResponseEntity<List<User>> searchForUsers(
+      @RequestParam String username, @RequestHeader(name = "Authorization") String token) {
+    List<User> users =
+        userService.getNonBlockedUsers(
+            username, jwtService.extractUserId(token.split(" ")[1].trim()));
     return new ResponseEntity<>(users, HttpStatus.OK);
   }
 }

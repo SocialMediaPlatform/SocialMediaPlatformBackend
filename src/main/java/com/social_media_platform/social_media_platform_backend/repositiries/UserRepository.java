@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 
 import java.util.Optional;
 import java.util.List;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
   Optional<User> findByEmail(String email);
@@ -28,6 +29,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
   @Query("update User u set u.password = :newPassword where u.userId = :userId")
   void setPassword(Long userId, String newPassword);
 
-  @Query("select u from User u full join u.userRelations ur full join ur.relationType rt where u.username like %:username% and (rt.relationTypeName is null or rt.relationTypeName <> 'blocked') and u.userId <> :userId")
-  List<User> findUsersByUsernamePattern(@Param("username") String username, @Param("userId") Long userId);
+  @Query(
+      "select u from User u full join u.userRelations ur full join ur.relationType rt where"
+          + " u.username like %:username% and (rt.relationTypeName is null or rt.relationTypeName"
+          + " <> 'blocked') and u.userId <> :userId")
+  List<User> findUsersByUsernamePattern(
+      @Param("username") String username, @Param("userId") Long userId);
 }
