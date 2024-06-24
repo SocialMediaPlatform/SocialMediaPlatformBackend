@@ -24,7 +24,7 @@ public class UserController {
     this.jwtService = jwtService;
   }
 
-  @GetMapping({"{userId}"})
+  @GetMapping({ "{userId}" })
   public ResponseEntity<?> getUserInfo(@PathVariable Long userId) {
     try {
       return ResponseEntity.ok(new UserResponse(userService.getUserInfo(userId)));
@@ -68,5 +68,12 @@ public class UserController {
         userService.getNonBlockedUsers(
             username, jwtService.extractUserId(token.split(" ")[1].trim()));
     return new ResponseEntity<>(users, HttpStatus.OK);
+  @GetMapping("getUser/{username}")
+  public ResponseEntity<?> getUserId(@PathVariable String username) {
+    try {
+      return ResponseEntity.ok(new UserResponse(userService.getUser(username)));
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().build();
+    }
   }
 }
