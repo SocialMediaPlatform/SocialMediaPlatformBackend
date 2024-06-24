@@ -39,7 +39,12 @@ public class UserRelationService {
   }
 
   public List<UserRelation> getfollowedUsers(Long userId) throws Exception {
-    var user = userRepository.findById(userId).orElseThrow(() -> new Exception("User not found"));
+    userRepository.findById(userId).orElseThrow(() -> new Exception("User not found"));
     return relationRepository.findFollowedUsers(userId);
+  }
+
+  public boolean areUsersBlocked(Long firstUserId, Long secondUserId) {
+    return relationRepository.areUsersBlocked(firstUserId, secondUserId)
+        || relationRepository.areUsersBlocked(secondUserId, firstUserId);
   }
 }

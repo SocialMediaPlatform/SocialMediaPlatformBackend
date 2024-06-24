@@ -37,4 +37,10 @@ public class UserService {
   public List<User> getNonBlockedUsers(String username, Long userId) {
     return userRepository.findUsersByUsernamePattern(username, userId);
   }
+
+  public User getUser(String username) {
+    return userRepository
+        .findByUsername(username)
+        .orElseThrow(() -> new RuntimeException("User not found"));
+  }
 }
