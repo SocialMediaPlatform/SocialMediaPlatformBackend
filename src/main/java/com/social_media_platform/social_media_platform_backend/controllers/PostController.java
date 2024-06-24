@@ -123,9 +123,9 @@ public class PostController {
     return new ResponseEntity<>(postResponses, HttpStatus.OK);
   }
 
-  @PostMapping("reactions/{postId}")
+  @GetMapping("reactions/{postId}")
   public ResponseEntity<?> addPostReaction(
-      @PathVariable Long postId, @RequestParam Long reactionTypeId, @RequestParam Long userId) {
+      @PathVariable Long postId) {
     try {
       List<PostReactionResponse> reactions = new ArrayList<>();
       for (var reaction : postService.getPostReactions(postId)) {
