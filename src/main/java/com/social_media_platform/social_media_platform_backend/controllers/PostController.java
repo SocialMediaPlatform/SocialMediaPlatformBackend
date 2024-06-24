@@ -42,7 +42,8 @@ public class PostController {
     for (Post post : postService.getUserPosts(userId)) {
       PostReactionResponse userPostReaction = null;
       try {
-        userPostReaction = new PostReactionResponse(reactionService.getUserPostReaction(post.getPostId(), userId));
+        userPostReaction =
+            new PostReactionResponse(reactionService.getUserPostReaction(post.getPostId(), userId));
       } catch (Exception e) {
       }
       postResponses.add(
@@ -62,8 +63,10 @@ public class PostController {
       Post post = postService.getPost(postId);
       PostReactionResponse userPostReaction = null;
       try {
-        userPostReaction = new PostReactionResponse(reactionService.getUserPostReaction(post.getPostId(),
-            jwtService.extractUserId(token.split(" ")[1].trim())));
+        userPostReaction =
+            new PostReactionResponse(
+                reactionService.getUserPostReaction(
+                    post.getPostId(), jwtService.extractUserId(token.split(" ")[1].trim())));
       } catch (Exception e) {
       }
       return new ResponseEntity<>(
@@ -106,7 +109,8 @@ public class PostController {
     for (var post : postService.getUsersPosts(users)) {
       PostReactionResponse userPostReaction = null;
       try {
-        userPostReaction = new PostReactionResponse(reactionService.getUserPostReaction(post.getPostId(), userId));
+        userPostReaction =
+            new PostReactionResponse(reactionService.getUserPostReaction(post.getPostId(), userId));
       } catch (Exception e) {
       }
       postResponses.add(
