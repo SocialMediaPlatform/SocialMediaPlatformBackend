@@ -65,9 +65,11 @@ public class UserController {
   public ResponseEntity<List<User>> searchForUsers(
       @RequestParam String username, @RequestHeader(name = "Authorization") String token) {
     List<User> users =
-        userService.getNonBlockedUsers(
-            username, jwtService.extractUserId(token.split(" ")[1].trim()));
+            userService.getNonBlockedUsers(
+                    username, jwtService.extractUserId(token.split(" ")[1].trim()));
     return new ResponseEntity<>(users, HttpStatus.OK);
+  }
+
   @GetMapping("getUser/{username}")
   public ResponseEntity<?> getUserId(@PathVariable String username) {
     try {
