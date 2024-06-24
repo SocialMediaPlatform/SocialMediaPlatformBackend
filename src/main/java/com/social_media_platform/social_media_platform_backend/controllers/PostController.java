@@ -28,7 +28,8 @@ public class PostController {
   public PostController(
       PostService postService,
       UserRelationService userRelationService,
-      ReactionService reactionService, JwtService jwtService) {
+      ReactionService reactionService,
+      JwtService jwtService) {
     this.postService = postService;
     this.userRelationService = userRelationService;
     this.reactionService = reactionService;
@@ -41,7 +42,8 @@ public class PostController {
     for (Post post : postService.getUserPosts(userId)) {
       PostReactionResponse userPostReaction = null;
       try {
-        userPostReaction = new PostReactionResponse(reactionService.getUserPostReaction(post.getPostId(), userId));
+        userPostReaction =
+            new PostReactionResponse(reactionService.getUserPostReaction(post.getPostId(), userId));
       } catch (Exception e) {
       }
       postResponses.add(
@@ -55,12 +57,14 @@ public class PostController {
   }
 
   @GetMapping("post/{postId}")
-  public ResponseEntity<PostResponse> getPost(@PathVariable Long postId,
-      @RequestHeader(name = "Authorization") String token) {
+  public ResponseEntity<PostResponse> getPost(
+      @PathVariable Long postId, @RequestHeader(name = "Authorization") String token) {
     try {
       Post post = postService.getPost(postId);
-      var userPostReaction = new PostReactionResponse(
-          reactionService.getUserPostReaction(post.getPostId(), jwtService.extractUserId(token.split(" ")[1].trim())));
+      var userPostReaction =
+          new PostReactionResponse(
+              reactionService.getUserPostReaction(
+                  post.getPostId(), jwtService.extractUserId(token.split(" ")[1].trim())));
       return new ResponseEntity<>(
           new PostResponse(
               post,
@@ -101,7 +105,8 @@ public class PostController {
     for (var post : postService.getUsersPosts(users)) {
       PostReactionResponse userPostReaction = null;
       try {
-        userPostReaction = new PostReactionResponse(reactionService.getUserPostReaction(post.getPostId(), userId));
+        userPostReaction =
+            new PostReactionResponse(reactionService.getUserPostReaction(post.getPostId(), userId));
       } catch (Exception e) {
       }
       postResponses.add(
