@@ -42,8 +42,7 @@ public class PostController {
     for (Post post : postService.getUserPosts(userId)) {
       PostReactionResponse userPostReaction = null;
       try {
-        userPostReaction =
-            new PostReactionResponse(reactionService.getUserPostReaction(post.getPostId(), userId));
+        userPostReaction = new PostReactionResponse(reactionService.getUserPostReaction(post.getPostId(), userId));
       } catch (Exception e) {
       }
       postResponses.add(
@@ -61,10 +60,12 @@ public class PostController {
       @PathVariable Long postId, @RequestHeader(name = "Authorization") String token) {
     try {
       Post post = postService.getPost(postId);
-      var userPostReaction =
-          new PostReactionResponse(
-              reactionService.getUserPostReaction(
-                  post.getPostId(), jwtService.extractUserId(token.split(" ")[1].trim())));
+      PostReactionResponse userPostReaction = null;
+      try {
+        userPostReaction = new PostReactionResponse(reactionService.getUserPostReaction(post.getPostId(),
+            jwtService.extractUserId(token.split(" ")[1].trim())));
+      } catch (Exception e) {
+      }
       return new ResponseEntity<>(
           new PostResponse(
               post,
@@ -105,8 +106,7 @@ public class PostController {
     for (var post : postService.getUsersPosts(users)) {
       PostReactionResponse userPostReaction = null;
       try {
-        userPostReaction =
-            new PostReactionResponse(reactionService.getUserPostReaction(post.getPostId(), userId));
+        userPostReaction = new PostReactionResponse(reactionService.getUserPostReaction(post.getPostId(), userId));
       } catch (Exception e) {
       }
       postResponses.add(
