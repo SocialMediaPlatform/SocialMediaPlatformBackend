@@ -1,5 +1,6 @@
 package com.social_media_platform.social_media_platform_backend.Security;
 
+import com.social_media_platform.social_media_platform_backend.databaseTables.User;
 import com.social_media_platform.social_media_platform_backend.services.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -41,7 +42,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     jwtToken = authHeader.substring(7);
     String username = jwtService.extractUsername(jwtToken);
     if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-      UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+      User userDetails = (User) this.userDetailsService.loadUserByUsername(username);
       if (jwtService.isTokenValid(jwtToken, userDetails)) {
         UsernamePasswordAuthenticationToken authToken =
             new UsernamePasswordAuthenticationToken(
