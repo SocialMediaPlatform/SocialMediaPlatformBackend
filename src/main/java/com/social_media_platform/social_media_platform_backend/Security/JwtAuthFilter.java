@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -25,10 +24,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
   private final UserDetailsService userDetailsService;
   private final UserRepository userRepository;
 
-  JwtAuthFilter(JwtService jwtService, UserDetailsService userDetailsService, UserRepository userRepository) {
+  JwtAuthFilter(
+      JwtService jwtService, UserDetailsService userDetailsService, UserRepository userRepository) {
     this.jwtService = jwtService;
     this.userDetailsService = userDetailsService;
-    this.userRepository= userRepository;
+    this.userRepository = userRepository;
   }
 
   @Override
@@ -47,11 +47,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     String username = jwtService.extractUsername(jwtToken);
     if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
       Optional<User> userDetails = userRepository.findByEmail(username);
-      if (userDetails.isPresent()){
+      if (userDetails.isPresent()) {
         if (jwtService.isTokenValid(jwtToken, userDetails.get())) {
           UsernamePasswordAuthenticationToken authToken =
-                  new UsernamePasswordAuthenticationToken(
-                          userDetails, null, userDetails.get().getAuthorities());
+              new UsernamePasswordAuthenticationToken(
+                  userDetails, null, userDetails.get().getAuthorities());
           authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
           SecurityContextHolder.getContext().setAuthentication(authToken);
         }

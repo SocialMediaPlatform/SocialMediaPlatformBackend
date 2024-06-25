@@ -45,9 +45,9 @@ public class AuthenticationService {
 
   public AuthenticationResponse authenticate(AuthenticationRequest request) {
     User user =
-            userRepository
-                    .findByEmail(request.getEmail())
-                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        userRepository
+            .findByEmail(request.getEmail())
+            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(user.getUsername(), request.getPassword()));
     String jwtToken = jwtService.generateToken(user);
