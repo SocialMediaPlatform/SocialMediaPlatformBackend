@@ -49,23 +49,18 @@ public class ConversationService {
   }
 
   @Transactional
-  public ConversationMessage sendMessage(
-      SendMessageRequest sendMessageRequest, User user) {
+  public ConversationMessage sendMessage(SendMessageRequest sendMessageRequest, User user) {
     User sender =
         userRepository
             .findByUsername(user.getUsername())
-            .orElseThrow(
-                () -> new IllegalStateException("User not found: " + user.getUsername()));
+            .orElseThrow(() -> new IllegalStateException("User not found: " + user.getUsername()));
     Long conversationId = sendMessageRequest.getConversationId();
 
     boolean isUserInConversation =
         conversationRepository.existsByUserIdAndConversationId(sender.getUserId(), conversationId);
     if (!isUserInConversation) {
       throw new IllegalStateException(
-          "User "
-              + user.getUsername()
-              + " is not part of the conversation "
-              + conversationId);
+          "User " + user.getUsername() + " is not part of the conversation " + conversationId);
     }
 
     Conversation conversation =
@@ -88,8 +83,7 @@ public class ConversationService {
             .findByUsername(initiatingUsers.getUsername())
             .orElseThrow(
                 () ->
-                    new IllegalStateException(
-                        "User not found: " + initiatingUsers.getUsername()));
+                    new IllegalStateException("User not found: " + initiatingUsers.getUsername()));
 
     List<Long> userIds = Arrays.asList(initiatingUser.getUserId(), OtherUserId);
     List<Long> conversationIds = conversationRepository.findConversationIdByUserIds(userIds);

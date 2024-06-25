@@ -90,10 +90,15 @@ public class User implements UserDetails {
 
   @Override
   public String toString() {
-    return "User{" +
-            "userId=" + userId +
-            ", username='" + username + '\'' +
-            ", email='" + email + '\'' + 
-            '}';
+    return "User{"
+        + "userId="
+        + userId
+        + ", username='"
+        + username
+        + '\''
+        + ", email='"
+        + email
+        + '\''
+        + '}';
   }
 }

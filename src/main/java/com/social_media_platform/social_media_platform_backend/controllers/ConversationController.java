@@ -18,7 +18,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 
-
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -38,8 +37,7 @@ public class ConversationController {
   public ResponseEntity<MessageResponse> sendMessage(
       @RequestBody SendMessageRequest sendMessageRequest) {
     User currentUser = getCurrentUser();
-    ConversationMessage message =
-        conversationService.sendMessage(sendMessageRequest, currentUser);
+    ConversationMessage message = conversationService.sendMessage(sendMessageRequest, currentUser);
     try {
       if (message == null) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -112,7 +110,9 @@ public class ConversationController {
 
   private User getCurrentUser() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    if (authentication == null || !authentication.isAuthenticated() || authentication instanceof AnonymousAuthenticationToken) {
+    if (authentication == null
+        || !authentication.isAuthenticated()
+        || authentication instanceof AnonymousAuthenticationToken) {
       throw new IllegalStateException("No authenticated user available");
     }
 
@@ -124,12 +124,15 @@ public class ConversationController {
       if (optionalPrincipal.isPresent() && optionalPrincipal.get() instanceof User) {
         return (User) optionalPrincipal.get();
       } else {
-        throw new IllegalStateException("Authenticated principal is not present or is not an instance of User");
+        throw new IllegalStateException(
+            "Authenticated principal is not present or is not an instance of User");
       }
     } else if (principal instanceof User) {
       return (User) principal;
     }
 
-    throw new IllegalStateException("Authenticated principal is not an instance of User and is of type: " + principal.getClass());
+    throw new IllegalStateException(
+        "Authenticated principal is not an instance of User and is of type: "
+            + principal.getClass());
   }
 }
