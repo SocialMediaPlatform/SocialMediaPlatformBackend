@@ -22,4 +22,14 @@ public class ConversationMessage {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
+
+  @Override
+  public String toString() {
+    return "ConversationMessage{" +
+            "messageId=" + messageId +
+            ", messageContent='" + messageContent + '\'' +
+            ", messageDate=" + messageDate +
+            ", userId=" + (user != null ? user.getUserId() : null) +
+            '}';
+  }
 }
