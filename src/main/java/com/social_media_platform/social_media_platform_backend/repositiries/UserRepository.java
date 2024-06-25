@@ -3,12 +3,14 @@ package com.social_media_platform.social_media_platform_backend.repositiries;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.social_media_platform.social_media_platform_backend.databaseTables.User;
 
 import jakarta.transaction.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -26,4 +28,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
   @Transactional
   @Query("update User u set u.password = :newPassword where u.userId = :userId")
   void setPassword(Long userId, String newPassword);
+
+  @Query(value = "SELECT u.username FROM user_conversation uc JOIN Users u ON u.user_id = uc.user_id WHERE uc.conversation_id = :conversationId", nativeQuery = true)
+  List<String> findUsernamesByConversationId(@Param("conversationId") Long conversationId);
 }
