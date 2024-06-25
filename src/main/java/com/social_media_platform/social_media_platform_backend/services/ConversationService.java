@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import com.social_media_platform.social_media_platform_backend.controllers.requests.CreateConversationRequest;
-import org.springframework.data.domain.PageRequest;
 import com.social_media_platform.social_media_platform_backend.Helpers.GroupConversationInfo;
 
 import java.util.*;
@@ -50,16 +49,12 @@ public class ConversationService {
 
         List<Long> userIds = Arrays.asList(initiatingUser.getUserId(), OtherUserId);
         List<Long> conversationIds = conversationRepository.findConversationIdByUserIds(userIds);
-
         return conversationIds.stream().findFirst().orElse(null);
     }
 
     public List<ConversationMessage> getConversationMessages(Long conversationId, int offset, int limit) {
-        System.out.println("offset and lmit:" + offset + limit);
-        System.out.println("ConversationId:" + conversationId);
-        List<ConversationMessage> conversation_messages = conversationMessageRepository.findMessagesByConversationId(conversationRepository.findById(conversationId), offset, limit);
-        System.out.println(conversation_messages);
-        return conversation_messages;
+        return conversationMessageRepository.findMessagesByConversationId(
+                conversationRepository.findById(conversationId), limit, offset);
     }
 
     public List<GroupConversationInfo> getGroupConversationDetails(UserDetails userDetails) {
