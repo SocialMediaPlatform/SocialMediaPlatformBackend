@@ -14,4 +14,20 @@ public interface UserRelationRepository extends JpaRepository<UserRelation, Inte
       "SELECT ur FROM UserRelation ur WHERE ur.user.userId = :userId and"
           + " ur.relationType.relationTypeId = 1")
   List<UserRelation> findFollowedUsers(Long userId);
+
+  @Query(
+      value =
+          "Select case when exists (Select * from user_relation ur where user_id = :firstUserId and"
+              + " target_user_id = :secondUserId and relation_type_id = 3) then Cast(1 as BIT) else"
+              + " CAST(0 AS BIT) end",
+      nativeQuery = true)
+  boolean areUsersBlocked(Long firstUserId, Long secondUserId);
+
+  @Query(
+      value =
+          "Select case when exists (Select * from user_relation ur where user_id = :firstUserId and"
+              + " target_user_id = :secondUserId and relation_type_id = 1) then Cast(1 as BIT) else"
+              + " CAST(0 AS BIT) end",
+      nativeQuery = true)
+  boolean areUsersFollowed(Long firstUserId, Long secondUserId);
 }

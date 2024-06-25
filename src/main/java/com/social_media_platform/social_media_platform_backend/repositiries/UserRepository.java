@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -31,4 +32,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
   @Query(value = "SELECT u.username FROM user_conversation uc JOIN Users u ON u.user_id = uc.user_id WHERE uc.conversation_id = :conversationId", nativeQuery = true)
   List<String> findUsernamesByConversationId(@Param("conversationId") Long conversationId);
+
+  @Query(
+      "select u from User u full join u.userRelations ur full join ur.relationType rt where"
+          + " u.username like %:username% and (rt.relationTypeName is null or rt.relationTypeName"
+          + " <> 'blocked') and u.userId <> :userId")
+  List<User> findUsersByUsernamePattern(
+      @Param("username") String username, @Param("userId") Long userId);
 }

@@ -36,7 +36,7 @@ public class RegistrationMailSender {
             + "<p> Users Registration Portal Service";
     MimeMessage message = mailSender.createMimeMessage();
     var messageHelper = new MimeMessageHelper(message);
-    messageHelper.setFrom("dailycodework@gmail.com", senderName);
+    messageHelper.setFrom("SMP@gmail.com", senderName);
     messageHelper.setTo(user.getEmail());
     messageHelper.setSubject(subject);
     messageHelper.setText(mailContent, true);

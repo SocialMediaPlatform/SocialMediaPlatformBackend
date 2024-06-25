@@ -27,19 +27,19 @@ public class User implements UserDetails {
   private String email;
   private String password;
 
-  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private Set<UserRelation> userRelations;
 
-  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private Set<Post> posts;
-
-  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  private Set<Reaction> reactions;
-
-  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  
+  @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private Set<ConversationMessage> conversationMessages;
 
-  @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+  @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  private Set<Reaction> reactions;
+
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
           name = "user_conversation",
           joinColumns = @JoinColumn(name = "user_id"),

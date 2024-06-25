@@ -55,4 +55,8 @@ public class PostService {
   public int getPostCommentsCount(Long postId) {
     return commentRepository.getPostCommentsCount(postId);
   }
+
+  public Post getPost(Long postId) throws Exception {
+    return postRepository.findById(postId).orElseThrow(() -> new Exception("User not found"));
+  }
 }

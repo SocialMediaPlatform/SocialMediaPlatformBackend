@@ -42,16 +42,16 @@ public class JwtService {
   public String generateToken(Map<String, Object> extraClaims, User userDetails) {
     return Jwts.builder()
         .setClaims(extraClaims)
-        .setSubject(userDetails.getUsername())
+        .setSubject(userDetails.getEmail())
         .setIssuedAt(new Date(System.currentTimeMillis()))
         .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
         .signWith(getSignInKey(), SignatureAlgorithm.HS256)
         .compact();
   }
 
-  public boolean isTokenValid(String token, UserDetails userDetails) {
+  public boolean isTokenValid(String token, User userDetails) {
     final String username = extractUsername(token);
-    return (username.equals(userDetails.getUsername())) && !isTokenExpired(token, userDetails);
+    return (username.equals(userDetails.getEmail())) && !isTokenExpired(token, userDetails);
   }
 
   public boolean isTokenExpired(String token, UserDetails userDetails) {
