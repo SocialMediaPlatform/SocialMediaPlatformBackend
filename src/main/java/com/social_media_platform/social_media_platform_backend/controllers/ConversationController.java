@@ -2,6 +2,7 @@ package com.social_media_platform.social_media_platform_backend.controllers;
 
 import com.social_media_platform.social_media_platform_backend.Helpers.GroupConversationInfo;
 import com.social_media_platform.social_media_platform_backend.controllers.responses.ConversationResponse;
+import com.social_media_platform.social_media_platform_backend.controllers.responses.MessageResponse;
 import com.social_media_platform.social_media_platform_backend.controllers.responses.GetConversationWithUserResponse;
 import com.social_media_platform.social_media_platform_backend.databaseTables.Conversation;
 import com.social_media_platform.social_media_platform_backend.services.ConversationService;
@@ -17,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/conversations")
@@ -53,7 +55,7 @@ public class ConversationController {
     }
 
     @GetMapping("/{conversationId}/messages")
-    public ResponseEntity<List<ConversationMessage>> getConversationMessages(
+    public ResponseEntity<List<MessageResponse>> getConversationMessages(
             @PathVariable Long conversationId,
             @RequestParam(required = false, defaultValue = "0") Integer start,
             @RequestParam(required = false, defaultValue = "20") Integer limit) {
@@ -63,7 +65,11 @@ public class ConversationController {
         }
 
         List<ConversationMessage> messages = conversationService.getConversationMessages(conversationId, start, limit);
-        return new ResponseEntity<>(messages, HttpStatus.OK);
+        List<MessageResponse> responseMessages = messages.stream()
+                .map(MessageResponse::new)
+                .collect(Collectors.toList());
+
+        return new ResponseEntity<>(responseMessages, HttpStatus.OK);
     }
 
     @GetMapping("/group-conversations")
