@@ -15,7 +15,7 @@ public class Conversation {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long conversationId;
 
-  @OneToMany(mappedBy = "conversation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "conversation", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private Set<ConversationMessage> conversationMessages = new HashSet<>();
 
   @ManyToMany(mappedBy = "conversations", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
