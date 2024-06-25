@@ -31,7 +31,7 @@ public class JwtServiceTest {
   @Test
   public void testExtractEmail() {
     User user = new User("username", "email@example.com", "password");
-    assertEquals(user.getEmail(), jwtService.extractUsername(token));
+    assertEquals(user.getUsername(), jwtService.extractUsername(token));
   }
 
   @Test
