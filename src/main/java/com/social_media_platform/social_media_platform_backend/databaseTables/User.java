@@ -36,7 +36,7 @@ public class User implements UserDetails {
   @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private Set<Reaction> reactions;
 
-  @ManyToMany(fetch = FetchType.LAZY)
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
       name = "user_conversation",
       joinColumns = @JoinColumn(name = "userId"),
