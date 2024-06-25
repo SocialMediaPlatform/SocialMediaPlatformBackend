@@ -9,8 +9,8 @@ import java.util.List;
 
 @Repository
 public interface ConversationRepository extends JpaRepository<Conversation, Long> {
-    @Query(value = "SELECT conversation_id FROM user_conversation WHERE user_id IN (:userIds) " +
-            "GROUP BY conversation_id HAVING COUNT(DISTINCT user_id) = 2 AND COUNT(*) = 2", nativeQuery = true)
+    @Query(value = "SELECT conversation_id FROM user_conversation " +
+            "GROUP BY conversation_id HAVING COUNT(DISTINCT user_id) = 2 AND SUM(CASE WHEN user_id IN (:userIds) THEN 1 ELSE 0 END) = 2", nativeQuery = true)
     List<Long> findConversationIdByUserIds(@Param("userIds") List<Long> userIds);
 
     @Query(value = "SELECT conversation_id FROM user_conversation " +
