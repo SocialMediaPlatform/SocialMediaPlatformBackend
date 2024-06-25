@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -15,7 +16,7 @@ import java.util.HashSet;
 
 @Data
 @Entity
-@EqualsAndHashCode(exclude = {"conversationMessages", "conversations"})
+@EqualsAndHashCode(exclude = {"conversationMessages", "conversations", "reactions"})
 @Table(name = "users")
 @NoArgsConstructor
 public class User implements UserDetails {
@@ -37,13 +38,14 @@ public class User implements UserDetails {
   private Set<ConversationMessage> conversationMessages;
 
   @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @ToString.Exclude
   private Set<Reaction> reactions;
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
-      name = "user_conversation",
-      joinColumns = @JoinColumn(name = "user_id"),
-      inverseJoinColumns = @JoinColumn(name = "conversation_id"))
+          name = "user_conversation",
+          joinColumns = @JoinColumn(name = "user_id"),
+          inverseJoinColumns = @JoinColumn(name = "conversation_id"))
   private Set<Conversation> conversations = new HashSet<>();
 
   public User(String username, String email, String password) {
