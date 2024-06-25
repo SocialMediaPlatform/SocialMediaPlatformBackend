@@ -9,16 +9,19 @@ import com.social_media_platform.social_media_platform_backend.services.Conversa
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.social_media_platform.social_media_platform_backend.databaseTables.User;
 import com.social_media_platform.social_media_platform_backend.controllers.requests.CreateConversationRequest;
 import com.social_media_platform.social_media_platform_backend.controllers.requests.SendMessageRequest;
 import com.social_media_platform.social_media_platform_backend.databaseTables.ConversationMessage;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -34,9 +37,9 @@ public class ConversationController {
   @PostMapping("/sendMessage")
   public ResponseEntity<MessageResponse> sendMessage(
       @RequestBody SendMessageRequest sendMessageRequest) {
-    UserDetails currentUserDetails = getCurrentUserDetails();
+    User currentUser = getCurrentUser();
     ConversationMessage message =
-        conversationService.sendMessage(sendMessageRequest, currentUserDetails);
+        conversationService.sendMessage(sendMessageRequest, currentUser);
     try {
       if (message == null) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -51,9 +54,9 @@ public class ConversationController {
   @PostMapping("create")
   public ResponseEntity<ConversationResponse> createConversation(
       @RequestBody CreateConversationRequest createConversationRequest) {
-    UserDetails currenUserDetails = getCurrentUserDetails();
+    User currentUser = getCurrentUser();
     Conversation createdConversation =
-        conversationService.createConversation(createConversationRequest, currenUserDetails);
+        conversationService.createConversation(createConversationRequest, currentUser);
     return new ResponseEntity<>(new ConversationResponse(createdConversation), HttpStatus.CREATED);
   }
 
@@ -63,8 +66,8 @@ public class ConversationController {
       @RequestParam(required = false, defaultValue = "0") Integer start,
       @RequestParam(required = false, defaultValue = "20") Integer limit) {
 
-    UserDetails currenUserDetails = getCurrentUserDetails();
-    Long conversationId = conversationService.getConversationsIdWithUser(userId, currenUserDetails);
+    User currentUser = getCurrentUser();
+    Long conversationId = conversationService.getConversationsIdWithUser(userId, currentUser);
 
     if (conversationId == null) {
       return new ResponseEntity<>(
@@ -82,8 +85,8 @@ public class ConversationController {
       @PathVariable Long conversationId,
       @RequestParam(required = false, defaultValue = "0") Integer start,
       @RequestParam(required = false, defaultValue = "20") Integer limit) {
-    UserDetails currentUserDetails = getCurrentUserDetails();
-    if (!conversationService.isUserInConversation(conversationId, currentUserDetails)) {
+    User currentUser = getCurrentUser();
+    if (!conversationService.isUserInConversation(conversationId, currentUser)) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
@@ -97,9 +100,9 @@ public class ConversationController {
 
   @GetMapping("/groupConversations")
   public ResponseEntity<List<GroupConversationInfo>> getUserGroupConversations() {
-    UserDetails currentUserDetails = getCurrentUserDetails();
+    User currentUser = getCurrentUser();
     List<GroupConversationInfo> groupConversationInfo =
-        conversationService.getGroupConversationDetails(currentUserDetails);
+        conversationService.getGroupConversationDetails(currentUser);
 
     if (groupConversationInfo.isEmpty()) {
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -107,9 +110,26 @@ public class ConversationController {
     return new ResponseEntity<>(groupConversationInfo, HttpStatus.OK);
   }
 
-  private UserDetails getCurrentUserDetails() {
+  private User getCurrentUser() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (authentication == null || !authentication.isAuthenticated() || authentication instanceof AnonymousAuthenticationToken) {
+      throw new IllegalStateException("No authenticated user available");
+    }
+
     Object principal = authentication.getPrincipal();
-    return (UserDetails) principal;
+    System.out.println(principal);
+
+    if (principal instanceof Optional) {
+      Optional<?> optionalPrincipal = (Optional<?>) principal;
+      if (optionalPrincipal.isPresent() && optionalPrincipal.get() instanceof User) {
+        return (User) optionalPrincipal.get();
+      } else {
+        throw new IllegalStateException("Authenticated principal is not present or is not an instance of User");
+      }
+    } else if (principal instanceof User) {
+      return (User) principal;
+    }
+
+    throw new IllegalStateException("Authenticated principal is not an instance of User and is of type: " + principal.getClass());
   }
 }
