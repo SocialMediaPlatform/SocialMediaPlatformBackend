@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import com.social_media_platform.social_media_platform_backend.controllers.requests.CreateConversationRequest;
 import com.social_media_platform.social_media_platform_backend.Helpers.GroupConversationInfo;
+import com.social_media_platform.social_media_platform_backend.controllers.requests.SendMessageRequest;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -39,8 +40,27 @@ public class ConversationService {
                 .orElseThrow(() -> new IllegalStateException("User not found: " + initiatingUsersDetails.getUsername()));
 
         Conversation newConversation = createNewConversation(request, initiatingUser);
-
         return conversationRepository.save(newConversation);
+    }
+
+    @Transactional
+    public ConversationMessage sendMessage(SendMessageRequest sendMessageRequest, UserDetails userDetails) {
+        User sender = userRepository.findByUsername(userDetails.getUsername())
+                .orElseThrow(() -> new IllegalStateException("User not found: " + userDetails.getUsername()));
+        Long conversationId = sendMessageRequest.getConversationId();
+
+        boolean isUserInConversation = conversationRepository.existsByUserIdAndConversationId(sender.getUserId(), conversationId);
+        if (!isUserInConversation) {
+            throw new IllegalStateException("User " + userDetails.getUsername() + " is not part of the conversation " + conversationId);
+        }
+
+        Conversation conversation = conversationRepository.findById(conversationId)
+                .orElseThrow(() -> new IllegalStateException("Conversation not found with ID: " + conversationId));
+
+        ConversationMessage newMessage = createConversationMessage(sendMessageRequest.getMessageContent(), sender, conversation);
+        conversationMessageRepository.save(newMessage);
+
+        return newMessage;
     }
 
     public Long getConversationsIdWithUser(Long OtherUserId, UserDetails initiatingUsersDetails) {
@@ -78,7 +98,8 @@ public class ConversationService {
     private Conversation createNewConversation(CreateConversationRequest request, User initiatingUser) {
         Conversation newConversation = new Conversation();
         addUsersToConversation(request, newConversation);
-        ConversationMessage newMessage = createConversationMessage(request, initiatingUser, newConversation);
+        ConversationMessage newMessage = createConversationMessage(
+                request.getMessageContent(), initiatingUser, newConversation);
         newConversation.addMessage(newMessage);
         newConversation.addUser(initiatingUser);
         return newConversation;
@@ -96,9 +117,9 @@ public class ConversationService {
                 .orElseThrow(() -> new IllegalStateException("User not found with ID: " + id));
     }
 
-    private ConversationMessage createConversationMessage(CreateConversationRequest request, User messageSender, Conversation conversation) {
+    private ConversationMessage createConversationMessage(String messageContent, User messageSender, Conversation conversation) {
         ConversationMessage newMessage = new ConversationMessage();
-        newMessage.setMessageContent(request.getMessageContent());
+        newMessage.setMessageContent(messageContent);
         newMessage.setMessageDate(new Date());
         newMessage.setUser(messageSender);
         newMessage.setConversation(conversation);
