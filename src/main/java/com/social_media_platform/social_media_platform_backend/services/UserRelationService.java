@@ -47,4 +47,8 @@ public class UserRelationService {
     return relationRepository.areUsersBlocked(firstUserId, secondUserId)
         || relationRepository.areUsersBlocked(secondUserId, firstUserId);
   }
+
+  public boolean areUsersFollowed(Long firstUserId, Long secondUserId) {
+    return relationRepository.areUsersFollowed(firstUserId, secondUserId);
+  }
 }
