@@ -44,12 +44,12 @@ public class AuthenticationService {
   }
 
   public AuthenticationResponse authenticate(AuthenticationRequest request) {
-    authenticationManager.authenticate(
-        new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
     User user =
         userRepository
             .findByEmail(request.getEmail())
             .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(user.getUsername(), request.getPassword()));
     String jwtToken = jwtService.generateToken(user);
     return new AuthenticationResponse(jwtToken);
   }

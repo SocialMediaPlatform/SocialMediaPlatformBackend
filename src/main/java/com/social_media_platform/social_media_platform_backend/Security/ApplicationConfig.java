@@ -24,7 +24,7 @@ public class ApplicationConfig {
   public UserDetailsService userDetailsService() {
     return email ->
         userRepository
-            .findByEmail(email)
+            .findByUsername(email)
             .orElseThrow(() -> new UsernameNotFoundException("User not found"));
   }
 
