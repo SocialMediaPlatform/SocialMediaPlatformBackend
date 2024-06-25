@@ -3,6 +3,7 @@ package com.social_media_platform.social_media_platform_backend.databaseTables;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,9 +11,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
+import java.util.HashSet;
 
 @Data
 @Entity
+@EqualsAndHashCode(exclude = {"conversationMessages", "conversations"})
 @Table(name = "users")
 @NoArgsConstructor
 public class User implements UserDetails {
@@ -39,9 +42,9 @@ public class User implements UserDetails {
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
       name = "user_conversation",
-      joinColumns = @JoinColumn(name = "userId"),
-      inverseJoinColumns = @JoinColumn(name = "conversationId"))
-  private Set<Conversation> conversations;
+      joinColumns = @JoinColumn(name = "user_id"),
+      inverseJoinColumns = @JoinColumn(name = "conversation_id"))
+  private Set<Conversation> conversations = new HashSet<>();
 
   public User(String username, String email, String password) {
     this.username = username;
