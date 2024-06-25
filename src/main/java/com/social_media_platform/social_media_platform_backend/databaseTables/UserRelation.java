@@ -2,8 +2,10 @@ package com.social_media_platform.social_media_platform_backend.databaseTables;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(exclude = {"user"})
 @Entity
 public class UserRelation {
   @Id
