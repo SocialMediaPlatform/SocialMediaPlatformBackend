@@ -43,9 +43,9 @@ public class User implements UserDetails {
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
-          name = "user_conversation",
-          joinColumns = @JoinColumn(name = "user_id"),
-          inverseJoinColumns = @JoinColumn(name = "conversation_id"))
+      name = "user_conversation",
+      joinColumns = @JoinColumn(name = "user_id"),
+      inverseJoinColumns = @JoinColumn(name = "conversation_id"))
   private Set<Conversation> conversations = new HashSet<>();
 
   public User(String username, String email, String password) {
