@@ -7,15 +7,15 @@ import java.util.Date;
 
 @Data
 public class MessageResponse {
-    private Long messageId;
-    private String content;
-    private Date messageDate;
-    private Long senderId;
+  private Long messageId;
+  private String content;
+  private Date messageDate;
+  private Long senderId;
 
-    public MessageResponse(ConversationMessage message) {
-        this.messageId = message.getMessageId();
-        this.content = message.getMessageContent();
-        this.messageDate = message.getMessageDate();
-        this.senderId = message.getUser().getUserId();
-    }
+  public MessageResponse(ConversationMessage message) {
+    this.messageId = message.getMessageId();
+    this.content = message.getMessageContent();
+    this.messageDate = message.getMessageDate();
+    this.senderId = message.getUser().getUserId();
+  }
 }

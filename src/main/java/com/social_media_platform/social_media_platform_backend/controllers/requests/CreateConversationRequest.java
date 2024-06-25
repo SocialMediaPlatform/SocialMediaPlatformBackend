@@ -6,6 +6,6 @@ import lombok.Data;
 
 @Data
 public class CreateConversationRequest {
-    private List<Long> recipientUserIds;
-    private String messageContent;
+  private List<Long> recipientUserIds;
+  private String messageContent;
 }

@@ -25,11 +25,16 @@ public class ConversationMessage {
 
   @Override
   public String toString() {
-    return "ConversationMessage{" +
-            "messageId=" + messageId +
-            ", messageContent='" + messageContent + '\'' +
-            ", messageDate=" + messageDate +
-            ", userId=" + (user != null ? user.getUserId() : null) +
-            '}';
+    return "ConversationMessage{"
+        + "messageId="
+        + messageId
+        + ", messageContent='"
+        + messageContent
+        + '\''
+        + ", messageDate="
+        + messageDate
+        + ", userId="
+        + (user != null ? user.getUserId() : null)
+        + '}';
   }
 }

@@ -7,6 +7,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class GroupConversationInfo {
-    private Long conversationId;
-    private List<String> usernames;
+  private Long conversationId;
+  private List<String> usernames;
 }

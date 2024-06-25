@@ -21,8 +21,7 @@ public class Conversation {
   @ManyToMany(mappedBy = "conversations", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private Set<User> users = new HashSet<>();
 
-  public Conversation() {
-  }
+  public Conversation() {}
 
   public void addMessage(ConversationMessage message) {
     this.conversationMessages.add(message);
@@ -35,9 +34,7 @@ public class Conversation {
   }
 
   public Set<Long> getUserIds() {
-    return users.stream()
-            .map(User::getUserId)
-            .collect(Collectors.toSet());
+    return users.stream().map(User::getUserId).collect(Collectors.toSet());
   }
 
   public Set<ConversationMessage> getConversationMessages() {

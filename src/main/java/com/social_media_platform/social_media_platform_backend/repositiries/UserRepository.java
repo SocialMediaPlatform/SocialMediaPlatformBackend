@@ -30,7 +30,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
   @Query("update User u set u.password = :newPassword where u.userId = :userId")
   void setPassword(Long userId, String newPassword);
 
-  @Query(value = "SELECT u.username FROM user_conversation uc JOIN Users u ON u.user_id = uc.user_id WHERE uc.conversation_id = :conversationId", nativeQuery = true)
+  @Query(
+      value =
+          "SELECT u.username FROM user_conversation uc JOIN Users u ON u.user_id = uc.user_id WHERE"
+              + " uc.conversation_id = :conversationId",
+      nativeQuery = true)
   List<String> findUsernamesByConversationId(@Param("conversationId") Long conversationId);
 
   @Query(

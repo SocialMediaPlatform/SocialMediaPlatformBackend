@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class SendMessageRequest {
-    private Long conversationId;
-    private String messageContent;
+  private Long conversationId;
+  private String messageContent;
 }

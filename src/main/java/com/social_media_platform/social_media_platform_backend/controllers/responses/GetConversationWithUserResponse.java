@@ -8,14 +8,11 @@ import java.util.stream.Collectors;
 
 @Data
 public class GetConversationWithUserResponse {
-    private Long conversationId;
-    private List<MessageResponse> messages;
+  private Long conversationId;
+  private List<MessageResponse> messages;
 
-    public GetConversationWithUserResponse(Long conversationId, List<ConversationMessage> messages) {
-        this.conversationId = conversationId;
-        this.messages = messages.stream()
-                .map(MessageResponse::new)
-                .collect(Collectors.toList());
-    }
-
+  public GetConversationWithUserResponse(Long conversationId, List<ConversationMessage> messages) {
+    this.conversationId = conversationId;
+    this.messages = messages.stream().map(MessageResponse::new).collect(Collectors.toList());
+  }
 }
