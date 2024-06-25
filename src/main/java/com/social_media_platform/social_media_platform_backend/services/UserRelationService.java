@@ -26,14 +26,12 @@ public class UserRelationService {
 
   public void setUserRelation(Long userId, Long targetId, Long relation) throws Exception {
     var user = userRepository.findById(userId).orElseThrow(() -> new Exception("User not found"));
-    var targetUser =
-        userRepository
-            .findById(targetId)
-            .orElseThrow(() -> new Exception("Target user user not found"));
-    var relationType =
-        relationTypeRepository
-            .findById(relation)
-            .orElseThrow(() -> new Exception("Relation type not found"));
+    var targetUser = userRepository
+        .findById(targetId)
+        .orElseThrow(() -> new Exception("Target user user not found"));
+    var relationType = relationTypeRepository
+        .findById(relation)
+        .orElseThrow(() -> new Exception("Relation type not found"));
 
     relationRepository.save(new UserRelation(user, relationType, targetUser));
   }
@@ -46,5 +44,9 @@ public class UserRelationService {
   public boolean areUsersBlocked(Long firstUserId, Long secondUserId) {
     return relationRepository.areUsersBlocked(firstUserId, secondUserId)
         || relationRepository.areUsersBlocked(secondUserId, firstUserId);
+  }
+
+  public boolean areUsersFollowed(Long firstUserId, Long secondUserId) {
+    return relationRepository.areUsersFollowed(firstUserId, secondUserId);
   }
 }
