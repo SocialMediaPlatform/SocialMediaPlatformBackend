@@ -1,12 +1,14 @@
 package com.social_media_platform.social_media_platform_backend.databaseTables;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
+@EqualsAndHashCode(exclude = {"conversations", "conversationMessages"})
 @Entity
 public class Conversation {
   @Id
@@ -16,7 +18,7 @@ public class Conversation {
   @OneToMany(mappedBy = "conversation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private Set<ConversationMessage> conversationMessages = new HashSet<>();
 
-  @ManyToMany(mappedBy = "conversations", fetch = FetchType.LAZY)
+  @ManyToMany(mappedBy = "conversations", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private Set<User> users = new HashSet<>();
 
   public Conversation() {
