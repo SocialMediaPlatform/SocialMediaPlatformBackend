@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.social_media_platform.social_media_platform_backend.controllers.requests.CreateConversationRequest;
+import com.social_media_platform.social_media_platform_backend.controllers.requests.SendMessageRequest;
 import com.social_media_platform.social_media_platform_backend.databaseTables.ConversationMessage;
 
 import org.springframework.security.core.Authentication;
@@ -28,6 +29,21 @@ public class ConversationController {
 
     public ConversationController(ConversationService conversationService) {
         this.conversationService = conversationService;
+    }
+
+    @PostMapping("/sendMessage")
+    public ResponseEntity<MessageResponse> sendMessage(@RequestBody SendMessageRequest sendMessageRequest) {
+        UserDetails currentUserDetails = getCurrentUserDetails();
+        ConversationMessage message = conversationService.sendMessage(sendMessageRequest, currentUserDetails);
+        try {
+            if (message == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
+            MessageResponse response = new MessageResponse(message);
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @PostMapping("create")
@@ -72,7 +88,7 @@ public class ConversationController {
         return new ResponseEntity<>(responseMessages, HttpStatus.OK);
     }
 
-    @GetMapping("/group-conversations")
+    @GetMapping("/groupConversations")
     public ResponseEntity<List<GroupConversationInfo>> getUserGroupConversations() {
         UserDetails currentUserDetails = getCurrentUserDetails();
         List<GroupConversationInfo> groupConversationInfo = conversationService.getGroupConversationDetails(currentUserDetails);
