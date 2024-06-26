@@ -14,6 +14,7 @@ public class CommentResponse {
   private String commentContents;
   private Date commentDate;
   private Long mainCommentId;
+  private String username;
 
   private List<CommentResponse> replies;
 
@@ -23,6 +24,7 @@ public class CommentResponse {
     this.setCommentId(comment.getCommentId());
     this.setCommentContents(comment.getCommentContents());
     this.setCommentDate(comment.getCommentDate());
+    this.setUsername(comment.getUser().getUsername());
     if (comment instanceof SubComment) {
       this.setMainCommentId(((SubComment) comment).getMainComment().getCommentId());
     }
