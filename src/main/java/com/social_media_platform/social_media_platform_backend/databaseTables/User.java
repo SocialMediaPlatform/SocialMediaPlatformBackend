@@ -37,8 +37,9 @@ public class User implements UserDetails {
   @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private Set<ConversationMessage> conversationMessages;
 
-  @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @ToString.Exclude
+  @JsonIgnore
   private Set<Reaction> reactions;
 
   @ManyToMany(fetch = FetchType.EAGER)
