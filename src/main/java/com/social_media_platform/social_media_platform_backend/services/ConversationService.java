@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.social_media_platform.social_media_platform_backend.controllers.requests.CreateConversationRequest;
 import com.social_media_platform.social_media_platform_backend.Helpers.GroupConversationInfo;
 import com.social_media_platform.social_media_platform_backend.controllers.requests.SendMessageRequest;
+import com.social_media_platform.social_media_platform_backend.controllers.responses.UserResponse;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -102,8 +103,11 @@ public class ConversationService {
     return conversationIds.stream()
         .map(
             conversationId -> {
-              List<String> usernames = userRepository.findUsernamesByConversationId(conversationId);
-              return new GroupConversationInfo(conversationId, usernames);
+              List<User> users = userRepository.findUsersByConversationId(conversationId);
+              List<UserResponse> recipients = users.stream()
+                                                 .map(UserResponse::new)
+                                                 .collect(Collectors.toList());
+              return new GroupConversationInfo(conversationId, recipients);
             })
         .collect(Collectors.toList());
   }

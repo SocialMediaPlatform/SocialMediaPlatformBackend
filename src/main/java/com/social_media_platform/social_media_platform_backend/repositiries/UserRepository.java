@@ -32,10 +32,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
   @Query(
       value =
-          "SELECT u.username FROM user_conversation uc JOIN Users u ON u.user_id = uc.user_id WHERE"
+          "SELECT u.* FROM user_conversation uc JOIN Users u ON u.user_id = uc.user_id WHERE"
               + " uc.conversation_id = :conversationId",
       nativeQuery = true)
-  List<String> findUsernamesByConversationId(@Param("conversationId") Long conversationId);
+  List<User> findUsersByConversationId(@Param("conversationId") Long conversationId);
 
   @Query(
       "select u from User u full join u.userRelations ur full join ur.relationType rt where"
