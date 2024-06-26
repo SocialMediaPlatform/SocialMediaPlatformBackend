@@ -13,6 +13,7 @@ import com.social_media_platform.social_media_platform_backend.services.UserRela
 import com.social_media_platform.social_media_platform_backend.services.UserService;
 
 import java.util.List;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/api/v1/user")
@@ -71,12 +72,16 @@ public class UserController {
   }
 
   @GetMapping("/search")
-  public ResponseEntity<List<User>> searchForUsers(
+  public ResponseEntity<List<UserResponse>> searchForUsers(
       @RequestParam String username, @RequestHeader(name = "Authorization") String token) {
     List<User> users =
         userService.getNonBlockedUsers(
             username, jwtService.extractUserId(token.split(" ")[1].trim()));
-    return new ResponseEntity<>(users, HttpStatus.OK);
+    List<UserResponse> userResponses = new ArrayList<>();
+      for (var user : users) {
+        userResponses.add(new UserResponse(user));
+      }
+    return new ResponseEntity<>(userResponses, HttpStatus.OK);
   }
 
   @GetMapping("getUser/{username}")
